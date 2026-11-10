@@ -1,6 +1,5 @@
 import React from 'react';
-import { Shield, Lock, Eye, RefreshCw, Menu } from 'lucide-react';
-import { Badge } from '../ui/Badge';
+import { Shield, Lock, Eye, Menu } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { TabId } from './Sidebar';
 
@@ -32,9 +31,9 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-white/[0.08] bg-[#080B14]/85 backdrop-blur-xl">
+    <header className="sticky top-0 z-40 w-full border-b border-white/[0.08] bg-[#080B14]/90 backdrop-blur-xl">
       <div className="flex h-16 items-center justify-between px-4 sm:px-6 max-w-7xl mx-auto">
-        {/* Left: Mobile menu button + Brand + Breadcrumbs */}
+        {/* Left: Mobile menu button + Brand */}
         <div className="flex items-center gap-3">
           <button
             type="button"
@@ -57,9 +56,9 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <span className="font-heading text-lg font-bold tracking-wider text-white">
                   DARK<span className="text-[#638BFF]">VAULT</span>
                 </span>
-                <Badge variant="blue" size="sm" className="hidden lg:inline-flex text-[10px]">
-                  v1.0.0-PRO
-                </Badge>
+                <span className="hidden lg:inline-flex px-1.5 py-0.5 text-[9px] font-mono font-bold uppercase rounded bg-[#638BFF]/15 text-[#638BFF] border border-[#638BFF]/30">
+                  v1.0-PRO
+                </span>
               </div>
               <p className="text-[11px] text-slate-400 tracking-tight hidden sm:block font-sans">
                 Your Password Security Command Center
@@ -67,23 +66,23 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
           </div>
 
-          {/* Breadcrumb separator */}
-          <div className="hidden xl:flex items-center gap-2 pl-4 ml-4 border-l border-white/[0.08] text-xs font-mono text-slate-400">
-            <span className="text-slate-500">SOC</span>
-            <span>/</span>
-            <span className="text-slate-200 font-semibold">{tabTitles[activeTab]}</span>
+          {/* Breadcrumb indicator */}
+          <div className="hidden xl:flex items-center gap-2 pl-4 ml-2 border-l border-white/[0.08] text-xs font-mono text-slate-400">
+            <span className="text-slate-600">/</span>
+            <span className="text-[#638BFF] font-semibold">{tabTitles[activeTab]}</span>
           </div>
         </div>
 
         {/* Center: Zero-Knowledge Privacy status badge */}
         <div className="hidden md:flex items-center gap-2">
           <button
+            type="button"
             onClick={onOpenPrivacyModal}
-            className="group flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#43D6A0]/10 border border-[#43D6A0]/25 hover:border-[#43D6A0]/50 hover:bg-[#43D6A0]/15 transition-all text-xs font-mono text-[#43D6A0] cursor-pointer shadow-[0_0_12px_rgba(67,214,160,0.12)]"
+            className="group flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#43D6A0]/10 border border-[#43D6A0]/30 hover:border-[#43D6A0]/60 hover:bg-[#43D6A0]/15 transition-all text-xs font-mono text-[#43D6A0] cursor-pointer shadow-[0_0_12px_rgba(67,214,160,0.12)]"
             title="Click to view DarkVault Zero-Knowledge Privacy Architecture"
           >
-            <Lock className="w-3.5 h-3.5 text-[#43D6A0] animate-pulse" />
-            <span className="font-semibold tracking-wide">ZERO-KNOWLEDGE PRIVACY</span>
+            <Lock className="w-3.5 h-3.5 text-[#43D6A0]" />
+            <span className="font-semibold tracking-wider text-[11px]">ZERO-KNOWLEDGE PRIVACY</span>
             <Eye className="w-3 h-3 text-[#43D6A0]/70 group-hover:text-[#43D6A0] transition-colors" />
           </button>
         </div>
@@ -92,6 +91,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         <div className="flex items-center gap-2.5">
           {/* Demo Data indicator & toggle */}
           <button
+            type="button"
             onClick={onToggleDemoData}
             className={`flex items-center gap-2 px-3 py-1.5 text-xs font-mono rounded-lg border transition-all cursor-pointer ${
               isDemoData
@@ -100,8 +100,8 @@ export const Navbar: React.FC<NavbarProps> = ({
             }`}
             title="Toggle between real telemetry and demonstration dataset"
           >
-            <RefreshCw className="w-3 h-3 text-current" />
-            <span className="font-semibold">{isDemoData ? 'DEMO DATA' : 'LIVE METRICS'}</span>
+            <span className={`w-1.5 h-1.5 rounded-full ${isDemoData ? 'bg-[#F5B942] animate-pulse' : 'bg-slate-500'}`} />
+            <span className="font-semibold text-[11px]">{isDemoData ? 'DEMO DATA' : 'LIVE METRICS'}</span>
           </button>
 
           <Button
@@ -110,7 +110,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             onClick={onQuickAnalyze}
             className="hidden sm:inline-flex text-xs"
           >
-            <Shield className="w-3.5 h-3.5" />
+            <Shield className="w-3.5 h-3.5 mr-1" />
             New Audit
           </Button>
         </div>

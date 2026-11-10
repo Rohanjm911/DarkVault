@@ -6,7 +6,6 @@ import {
   FileCheck2,
   Activity,
   ArrowUpRight,
-  TrendingUp,
   AlertTriangle,
   CheckCircle2,
 } from 'lucide-react';
@@ -54,14 +53,16 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
         badgeText={metrics.isDemoData ? 'DEMO TELEMETRY' : 'LIVE AUDIT POOL'}
         badgeVariant={metrics.isDemoData ? 'amber' : 'green'}
         actions={
-          <Button
-            variant="secondary"
-            size="sm"
-            onClick={onToggleDemoData}
-            className="cursor-pointer font-mono text-xs"
-          >
-            {metrics.isDemoData ? 'Switch to Live Data' : 'Load Demo Set'}
-          </Button>
+          !metrics.isDemoData && (
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={onToggleDemoData}
+              className="cursor-pointer font-mono text-xs"
+            >
+              Load Demo Dataset
+            </Button>
+          )
         }
       />
       {/* Demo vs Real Data Banner */}
@@ -87,10 +88,10 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
       )}
 
       {/* Top Row: Radial Gauge Overview + 3 Stat Metric Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-5 items-stretch">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
         {/* Radial Score Gauge Card */}
-        <Card variant="glass" glow="blue" hoverEffect className="md:col-span-5 flex flex-col justify-between">
-          <CardHeader className="flex flex-row items-center justify-between">
+        <Card variant="glass" glow="blue" hoverEffect className="lg:col-span-4 flex flex-col justify-between">
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
             <div>
               <CardTitle>Security Posture Index</CardTitle>
               <p className="text-xs text-slate-400 mt-0.5">
@@ -101,32 +102,34 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
               Live SOC
             </Badge>
           </CardHeader>
-          <CardContent className="flex flex-col sm:flex-row items-center justify-around gap-4 py-4">
-            <RadialScoreGauge score={metrics.overallSecurityScore} size={150} strokeWidth={11} />
-            <div className="space-y-2 text-center sm:text-left text-xs font-mono">
+          <CardContent className="flex flex-col sm:flex-row items-center justify-around gap-4 py-3">
+            <RadialScoreGauge score={metrics.overallSecurityScore} size={145} strokeWidth={11} />
+            <div className="space-y-2 text-center sm:text-left text-xs font-mono w-full sm:w-auto">
               <div className="p-2 rounded-lg bg-[#080B14] border border-white/[0.06]">
-                <div className="text-[10px] text-slate-500">POLICY STANDARD</div>
+                <div className="text-[10px] text-slate-500 font-semibold tracking-wider">POLICY STANDARD</div>
                 <div className="text-xs font-bold text-slate-200 mt-0.5">NIST SP 800-63B</div>
               </div>
               <div className="p-2 rounded-lg bg-[#080B14] border border-white/[0.06]">
-                <div className="text-[10px] text-slate-500">THREAT DEFENSE</div>
+                <div className="text-[10px] text-slate-500 font-semibold tracking-wider">THREAT DEFENSE</div>
                 <div className="text-xs font-bold text-[#43D6A0] mt-0.5">K-Anonymity Verified</div>
               </div>
             </div>
           </CardContent>
-          <div className="p-3 px-5 bg-[#080B14]/40 border-t border-white/[0.06] text-[11px] font-mono text-slate-400 flex items-center justify-between">
+          <div className="p-2.5 px-5 bg-[#080B14]/50 border-t border-white/[0.06] text-[11px] font-mono text-slate-400 flex items-center justify-between">
             <span>Audit Coverage</span>
-            <span className="text-[#638BFF] font-semibold">100% In-Memory</span>
+            <span className="text-[#638BFF] font-semibold">100% Volatile Memory</span>
           </div>
         </Card>
 
         {/* 3 Metric Summary Cards */}
-        <div className="md:col-span-7 grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-3 gap-4">
           {/* Total Analyses */}
           <Card variant="glass" glow="purple" hoverEffect className="flex flex-col justify-between">
             <CardContent className="p-5">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-mono font-semibold text-slate-400 tracking-wider">TOTAL AUDITS</span>
+                <span className="text-[10px] font-mono font-semibold text-slate-400 tracking-wider whitespace-nowrap">
+                  TOTAL AUDITED
+                </span>
                 <div className="p-2 rounded-lg bg-[#936BFF]/15 text-[#936BFF]">
                   <Activity className="w-4 h-4" />
                 </div>
@@ -136,13 +139,13 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                   <AnimatedCounter value={metrics.totalAnalyses} />
                 </span>
               </div>
-              <div className="mt-2 flex items-center gap-1 text-[11px] text-[#43D6A0] font-mono">
-                <TrendingUp className="w-3 h-3" />
+              <div className="mt-2 flex items-center gap-1.5 text-[11px] text-slate-400 font-mono">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#936BFF]" />
                 <span>Zero-Knowledge</span>
               </div>
             </CardContent>
             <div className="p-2.5 px-4 bg-[#080B14]/40 border-t border-white/[0.06] text-[10px] font-mono text-slate-400 truncate">
-              Air-gapped evaluation
+              Air-Gapped Sandbox
             </div>
           </Card>
 
@@ -150,7 +153,9 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
           <Card variant="glass" glow="green" hoverEffect className="flex flex-col justify-between">
             <CardContent className="p-5">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-mono font-semibold text-slate-400 tracking-wider">STRONG PASSWORDS</span>
+                <span className="text-[10px] font-mono font-semibold text-slate-400 tracking-wider whitespace-nowrap">
+                  STRONG SECRETS
+                </span>
                 <div className="p-2 rounded-lg bg-[#43D6A0]/15 text-[#43D6A0]">
                   <CheckCircle2 className="w-4 h-4" />
                 </div>
@@ -160,10 +165,13 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                   <AnimatedCounter value={metrics.strongPasswords} />
                 </span>
               </div>
-              <div className="mt-2 text-[11px] text-slate-400 font-mono">
-                {metrics.totalAnalyses > 0
-                  ? `${Math.round((metrics.strongPasswords / metrics.totalAnalyses) * 100)}% of audit pool`
-                  : '0% pool'}
+              <div className="mt-2 flex items-center gap-1.5 text-[11px] text-[#43D6A0] font-mono">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#43D6A0]" />
+                <span>
+                  {metrics.totalAnalyses > 0
+                    ? `${Math.round((metrics.strongPasswords / metrics.totalAnalyses) * 100)}% of audit pool`
+                    : '0% pool'}
+                </span>
               </div>
             </CardContent>
             <div className="p-2.5 px-4 bg-[#080B14]/40 border-t border-white/[0.06] text-[10px] font-mono text-[#43D6A0] truncate">
@@ -175,7 +183,9 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
           <Card variant="glass" glow="danger" hoverEffect className="flex flex-col justify-between">
             <CardContent className="p-5">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-mono font-semibold text-slate-400 tracking-wider">BREACH HITS</span>
+                <span className="text-[10px] font-mono font-semibold text-slate-400 tracking-wider whitespace-nowrap">
+                  BREACH HITS
+                </span>
                 <div className="p-2 rounded-lg bg-[#F06475]/15 text-[#F06475]">
                   <Database className="w-4 h-4" />
                 </div>
@@ -185,12 +195,13 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                   <AnimatedCounter value={metrics.breachesDetected} />
                 </span>
               </div>
-              <div className="mt-2 text-[11px] text-[#F06475] font-mono font-semibold">
-                Critical Exposure
+              <div className="mt-2 flex items-center gap-1.5 text-[11px] text-[#F06475] font-mono font-semibold">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#F06475] animate-pulse" />
+                <span>Critical Exposure</span>
               </div>
             </CardContent>
             <div className="p-2.5 px-4 bg-[#080B14]/40 border-t border-white/[0.06] text-[10px] font-mono text-slate-400 truncate">
-              HIBP 1B+ database
+              HIBP 1B+ Database
             </div>
           </Card>
         </div>

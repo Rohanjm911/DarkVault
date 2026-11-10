@@ -35,10 +35,10 @@ export const Card: React.FC<CardProps> = ({
     <div
       className={twMerge(
         clsx(
-          'rounded-xl transition-all duration-200 overflow-hidden',
+          'rounded-2xl transition-all duration-200 overflow-hidden',
           variantStyles[variant],
           glowStyles[glow],
-          hoverEffect && 'hover:-translate-y-0.5 hover:shadow-lg',
+          hoverEffect && 'hover:-translate-y-0.5 hover:shadow-xl',
           className
         )
       )}

@@ -114,8 +114,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   clsx(
                     'group relative flex items-center justify-between w-full px-3.5 py-2.5 rounded-xl font-medium text-xs font-mono transition-all duration-150 cursor-pointer text-left',
                     isActive
-                      ? 'bg-[#638BFF]/15 text-[#638BFF] border border-[#638BFF]/35 shadow-[0_0_15px_rgba(99,139,255,0.18)] font-semibold'
-                      : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/60 border border-transparent'
+                      ? 'bg-[#638BFF]/15 text-[#638BFF] border border-[#638BFF]/35 shadow-[0_0_15px_rgba(99,139,255,0.18)] font-semibold before:absolute before:left-0 before:top-2 before:bottom-2 before:w-1 before:bg-[#638BFF] before:rounded-r-full'
+                      : 'text-slate-400 hover:text-slate-100 hover:bg-slate-850/60 border border-transparent'
                   )
                 )}
               >
@@ -123,7 +123,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   <Icon
                     className={clsx(
                       'w-4 h-4 transition-transform group-hover:scale-110 shrink-0',
-                      isActive ? 'text-[#638BFF]' : 'text-slate-500 group-hover:text-slate-300'
+                      isActive ? 'text-[#638BFF]' : 'text-slate-400 group-hover:text-slate-200'
                     )}
                   />
                   <span>{item.label}</span>
