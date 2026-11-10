@@ -39,6 +39,9 @@ export const ReportsPage: React.FC<ReportsPageProps> = ({
     try {
       await generateSecurityReportPdf(currentAnalysis, {
         targetIdentifier,
+        reportTitle,
+        includeCrackTimes,
+        includeRemediation,
         useBackendIfAvailable: useBackend,
       });
       toast({

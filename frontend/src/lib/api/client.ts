@@ -1,4 +1,5 @@
 import { DashboardMetrics } from '../types';
+import { getSessionMetrics } from '../store/sessionTelemetryStore';
 
 export async function getDashboardStats(demo: boolean = false): Promise<DashboardMetrics> {
   try {
@@ -17,7 +18,12 @@ export async function getDashboardStats(demo: boolean = false): Promise<Dashboar
       recentAlerts: data.recent_alerts,
     };
   } catch {
-    // If backend is not running or unreachable, return robust default metrics marked as demo
+    // If user requested live data, return dynamic in-memory session metrics
+    if (!demo) {
+      return getSessionMetrics();
+    }
+
+    // Default demonstration dataset
     return {
       isDemoData: true,
       overallSecurityScore: 78,

@@ -19,6 +19,7 @@ import { SettingsPage } from './pages/SettingsPage';
 import { analyzePassword } from './lib/crypto/entropy';
 import { checkPasswordBreach } from './lib/api/hibp';
 import { getDashboardStats, sendTelemetry } from './lib/api/client';
+import { recordSessionAudit } from './lib/store/sessionTelemetryStore';
 import { useSettingsStore } from './lib/store/useSettingsStore';
 import { generateSecurityReportPdf } from './lib/pdf/pdfGenerator';
 import {
@@ -68,6 +69,22 @@ function DarkVaultApp() {
     recentAlerts: [],
   });
 
+  // Sync Accent Theme dynamically across DOM
+  useEffect(() => {
+    document.documentElement.dataset.accent = settings.accentColor;
+  }, [settings.accentColor]);
+
+  // Support Clear Memory On Browser Close
+  useEffect(() => {
+    if (settings.clearMemoryOnClose) {
+      const handleBeforeUnload = () => {
+        clearVaultMemory();
+      };
+      window.addEventListener('beforeunload', handleBeforeUnload);
+      return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+    }
+  }, [settings.clearMemoryOnClose, clearVaultMemory]);
+
   // Load dashboard metrics on mount and when demo flag changes
   const loadMetrics = useCallback(async (forceDemo?: boolean) => {
     const isDemo = forceDemo !== undefined ? forceDemo : true;
@@ -87,6 +104,19 @@ function DarkVaultApp() {
     };
   }, []);
 
+  // Re-evaluate current password when NIST strict rules toggle changes
+  const [prevNistStrict, setPrevNistStrict] = useState(settings.nistStrictRules);
+  if (settings.nistStrictRules !== prevNistStrict) {
+    setPrevNistStrict(settings.nistStrictRules);
+    if (password) {
+      setAnalysis(
+        analyzePassword(password, breachStatus, {
+          nistStrictRules: settings.nistStrictRules,
+        })
+      );
+    }
+  }
+
   const handlePasswordChange = (newPassword: string) => {
     setPassword(newPassword);
     const updatedBreach: BreachResult = {
@@ -98,8 +128,24 @@ function DarkVaultApp() {
       loading: false,
     };
     setBreachStatus(updatedBreach);
-    const res = analyzePassword(newPassword, updatedBreach);
+    const res = analyzePassword(newPassword, updatedBreach, {
+      nistStrictRules: settings.nistStrictRules,
+    });
     setAnalysis(res);
+
+    if (newPassword.trim().length > 0) {
+      recordSessionAudit({
+        action: 'Credential Analysis',
+        score: res.score,
+        risk: res.grade === 'Hardened' ? 'SECURE' : (res.grade.toUpperCase() as any),
+        details: `Audited ${res.passwordLength}-char secret (${res.entropyBits.toFixed(1)} bits entropy, ${res.grade})`,
+        breached: false,
+      });
+
+      if (!metrics.isDemoData) {
+        loadMetrics(false);
+      }
+    }
   };
 
   const handleExecuteBreachCheck = async (customPassword?: string) => {
@@ -113,8 +159,24 @@ function DarkVaultApp() {
     });
 
     setBreachStatus(result);
-    const updatedAnalysis = analyzePassword(target, result);
+    const updatedAnalysis = analyzePassword(target, result, {
+      nistStrictRules: settings.nistStrictRules,
+    });
     setAnalysis(updatedAnalysis);
+
+    recordSessionAudit({
+      action: 'Zero-Knowledge Breach Scan',
+      score: updatedAnalysis.score,
+      risk: result.breached ? 'CRITICAL' : 'SECURE',
+      details: result.breached
+        ? `Exposed: found ${result.count.toLocaleString()} occurrences in public leaks`
+        : 'Clean: zero breach hits identified across 1B+ records',
+      breached: result.breached,
+    });
+
+    if (!metrics.isDemoData) {
+      loadMetrics(false);
+    }
 
     if (result.breached) {
       toast({

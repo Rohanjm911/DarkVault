@@ -479,6 +479,14 @@ export const GeneratorPage: React.FC<GeneratorPageProps> = ({ onSendToAnalyzer }
                     </Badge>
                     <button
                       type="button"
+                      onClick={() => onSendToAnalyzer(item.password)}
+                      className="p-1 text-slate-400 hover:text-[#638BFF] rounded hover:bg-slate-800 transition-colors cursor-pointer"
+                      title="Send to Password Analyzer"
+                    >
+                      <Send className="w-3.5 h-3.5" />
+                    </button>
+                    <button
+                      type="button"
                       onClick={() => handleCopy(item.password)}
                       className="p-1 text-slate-400 hover:text-white rounded hover:bg-slate-800 transition-colors cursor-pointer"
                       title="Copy"

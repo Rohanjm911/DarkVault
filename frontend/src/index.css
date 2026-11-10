@@ -36,6 +36,16 @@
     color-scheme: dark;
   }
 
+  html[data-accent="green"] {
+    --accent-blue: #43D6A0;
+    --accent-purple: #2DD4BF;
+  }
+
+  html[data-accent="purple"] {
+    --accent-blue: #936BFF;
+    --accent-purple: #C084FC;
+  }
+
   * {
     border-color: var(--border-color);
   }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Database,
   Search,
@@ -34,7 +34,29 @@ export const BreachCheckerPage: React.FC<BreachCheckerPageProps> = ({
   useBackendProxy,
 }) => {
   const [localInput, setLocalInput] = useState(password);
+  const [prevPassword, setPrevPassword] = useState(password);
   const [sha1Preview, setSha1Preview] = useState<{ fullHash: string; prefix: string; suffix: string } | null>(null);
+
+  if (password !== prevPassword) {
+    setPrevPassword(password);
+    setLocalInput(password);
+  }
+
+  useEffect(() => {
+    let isMounted = true;
+    if (password) {
+      calculateSha1(password).then((res) => {
+        if (isMounted) setSha1Preview(res);
+      });
+    } else {
+      Promise.resolve().then(() => {
+        if (isMounted) setSha1Preview(null);
+      });
+    }
+    return () => {
+      isMounted = false;
+    };
+  }, [password]);
 
   const handleInputChange = async (val: string) => {
     setLocalInput(val);

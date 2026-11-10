@@ -66,7 +66,8 @@ export function analyzePassword(
     prefix: '',
     suffix: '',
     loading: false,
-  }
+  },
+  options: { nistStrictRules?: boolean } = {}
 ): PasswordAnalysis {
   if (!password) {
     return {
@@ -219,17 +220,30 @@ export function analyzePassword(
   const effectiveEntropy = Math.max(0, Math.round((rawEntropy - entropyPenalty) * 10) / 10);
 
   // NIST SP 800-63B Compliance Check:
-  // - Minimum length >= 8 (recommends >= 15 for users)
+  // - Baseline minimum length >= 8 (Strict Enterprise requires >= 16)
   // - Maximum length supported >= 64
   // - Must not be in common breach dictionary
   // - Must not contain predictable sequential patterns
   let nistCompliant = true;
-  if (length < 8) {
+  const minRequiredLength = options.nistStrictRules ? 16 : 8;
+  if (length < minRequiredLength) {
     nistCompliant = false;
-    nistFeedback.push('Fails NIST minimum length requirement (at least 8 characters required).');
-    recommendations.push('Increase password length to at least 15+ characters.');
+    nistFeedback.push(
+      options.nistStrictRules
+        ? 'Fails NIST Strict Enterprise requirement (16+ characters required).'
+        : 'Fails NIST minimum length requirement (at least 8 characters required).'
+    );
+    recommendations.push(
+      options.nistStrictRules
+        ? 'Increase password length to at least 16+ characters for strict enterprise compliance.'
+        : 'Increase password length to at least 15+ characters.'
+    );
   } else {
-    nistFeedback.push('Meets NIST baseline length requirement (8+ characters).');
+    nistFeedback.push(
+      options.nistStrictRules
+        ? 'Meets NIST Strict Enterprise length requirement (16+ characters).'
+        : 'Meets NIST baseline length requirement (8+ characters).'
+    );
   }
 
   if (length >= 16) {

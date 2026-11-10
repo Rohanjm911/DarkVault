@@ -11,6 +11,9 @@ export interface GenerateReportOptions {
   targetIdentifier?: string;
   notes?: string;
   useBackendIfAvailable?: boolean;
+  reportTitle?: string;
+  includeCrackTimes?: boolean;
+  includeRemediation?: boolean;
 }
 
 export async function generateSecurityReportPdf(
@@ -18,12 +21,15 @@ export async function generateSecurityReportPdf(
   options: GenerateReportOptions = { targetIdentifier: 'Credential Security Audit', useBackendIfAvailable: true }
 ): Promise<void> {
   const filename = `DarkVault-Security-Audit-${Date.now()}.pdf`;
+  const reportTitle = options.reportTitle || 'DarkVault Security Analysis Report';
+  const showCrackTimes = options.includeCrackTimes !== false;
+  const showRemediation = options.includeRemediation !== false;
 
   // Try backend ReportLab generator first if enabled
   if (options.useBackendIfAvailable) {
     try {
       const payload = {
-        report_title: 'DarkVault Security Analysis Report',
+        report_title: reportTitle,
         generated_by: 'DarkVault Command Center',
         target_identifier: options.targetIdentifier || 'Confidential Credential Audit',
         entropy_bits: analysis.entropyBits,
@@ -38,7 +44,7 @@ export async function generateSecurityReportPdf(
         },
         is_breached: analysis.breachStatus.breached,
         breach_count: analysis.breachStatus.count,
-        crack_times: analysis.crackTimes,
+        crack_times: showCrackTimes ? analysis.crackTimes : {},
         detected_patterns: analysis.patterns.map((p) => `${p.label}: ${p.description}`),
         findings: analysis.patterns.map((p) => ({
           category: p.type,
@@ -48,7 +54,7 @@ export async function generateSecurityReportPdf(
           recommendation: 'Replace with high-entropy randomized credential.',
         })),
         nist_compliant: analysis.nistCompliant,
-        recommendations: analysis.recommendations,
+        recommendations: showRemediation ? analysis.recommendations : [],
       };
 
       const response = await fetch('/api/reports/generate', {
@@ -90,13 +96,13 @@ export async function generateSecurityReportPdf(
   // Title
   doc.setTextColor(255, 255, 255);
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(18);
-  doc.text('DARKVAULT', 15, 16);
+  doc.setFontSize(16);
+  doc.text(reportTitle.toUpperCase(), 15, 16);
 
   doc.setFontSize(10);
   doc.setFont('helvetica', 'normal');
   doc.setTextColor(148, 163, 184);
-  doc.text('Password Security Command Center | Zero-Knowledge Audit', 15, 24);
+  doc.text(`Target: ${options.targetIdentifier || 'Credential Security Audit'} | Zero-Knowledge Evaluation`, 15, 24);
 
   doc.setFontSize(8);
   doc.text(`Generated: ${new Date().toLocaleString()} | ID: DV-${Date.now().toString().slice(-8)}`, 15, 30);
@@ -165,30 +171,32 @@ export async function generateSecurityReportPdf(
   // @ts-expect-error autoTable adds lastAutoTable to doc
   y = doc.lastAutoTable.finalY + 10;
 
-  // Attack Vector Crack Times
-  doc.setFontSize(11);
-  doc.setFont('helvetica', 'bold');
-  doc.setTextColor(15, 23, 42);
-  doc.text('2. Threat Vector Crack Estimations', 15, y);
-  y += 4;
+  // Attack Vector Crack Times (conditionally included)
+  if (showCrackTimes) {
+    doc.setFontSize(11);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(15, 23, 42);
+    doc.text('2. Threat Vector Crack Estimations', 15, y);
+    y += 4;
 
-  autoTable(doc, {
-    startY: y,
-    head: [['Attack Vector', 'Time to Compromise', 'Rate Specification']],
-    body: [
-      ['Online Throttled', analysis.crackTimes.onlineThrottled, '100 attempts / hour (rate limited API)'],
-      ['Online Unthrottled', analysis.crackTimes.onlineUnthrottled, '100 attempts / sec (unprotected login)'],
-      ['Offline Fast Hash (MD5/NTLM)', analysis.crackTimes.offlineFastHash, '10 billion attempts / sec (consumer GPU)'],
-      ['Offline GPU Rig (SHA-256)', analysis.crackTimes.offlineGpuRig, '100 billion attempts / sec (cluster)'],
-    ],
-    theme: 'grid',
-    headStyles: { fillColor: [15, 23, 42], textColor: 255 },
-    alternateRowStyles: { fillColor: [248, 250, 252] },
-    styles: { fontSize: 8.5, cellPadding: 3 },
-  });
+    autoTable(doc, {
+      startY: y,
+      head: [['Attack Vector', 'Time to Compromise', 'Rate Specification']],
+      body: [
+        ['Online Throttled', analysis.crackTimes.onlineThrottled, '100 attempts / hour (rate limited API)'],
+        ['Online Unthrottled', analysis.crackTimes.onlineUnthrottled, '100 attempts / sec (unprotected login)'],
+        ['Offline Fast Hash (MD5/NTLM)', analysis.crackTimes.offlineFastHash, '10 billion attempts / sec (consumer GPU)'],
+        ['Offline GPU Rig (SHA-256)', analysis.crackTimes.offlineGpuRig, '100 billion attempts / sec (cluster)'],
+      ],
+      theme: 'grid',
+      headStyles: { fillColor: [15, 23, 42], textColor: 255 },
+      alternateRowStyles: { fillColor: [248, 250, 252] },
+      styles: { fontSize: 8.5, cellPadding: 3 },
+    });
 
-  // @ts-expect-error autoTable adds lastAutoTable to doc
-  y = doc.lastAutoTable.finalY + 10;
+    // @ts-expect-error autoTable adds lastAutoTable to doc
+    y = doc.lastAutoTable.finalY + 10;
+  }
 
   // Pattern Detections & Recommendations
   doc.setFontSize(11);
@@ -214,11 +222,13 @@ export async function generateSecurityReportPdf(
     y += 5;
   }
 
-  y += 3;
-  analysis.recommendations.forEach((rec) => {
-    doc.text(`→ ${rec}`, 18, y);
-    y += 5;
-  });
+  if (showRemediation) {
+    y += 3;
+    analysis.recommendations.forEach((rec) => {
+      doc.text(`→ ${rec}`, 18, y);
+      y += 5;
+    });
+  }
 
   // Footer / Privacy disclaimer
   doc.setDrawColor(203, 213, 225);

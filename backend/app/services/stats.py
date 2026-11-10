@@ -85,9 +85,28 @@ def get_demo_dashboard_stats() -> DashboardStatsResponse:
 
 def get_live_dashboard_stats(db: Session, force_demo: bool = False) -> DashboardStatsResponse:
     """Computes actual telemetry metrics from database logs."""
-    total = db.query(SecurityAuditLog).count()
-    if total == 0 or force_demo:
+    if force_demo:
         return get_demo_dashboard_stats()
+
+    total = db.query(SecurityAuditLog).count()
+    if total == 0:
+        return DashboardStatsResponse(
+            is_demo_data=False,
+            overall_security_score=0,
+            total_analyses=0,
+            strong_passwords=0,
+            weak_passwords=0,
+            breaches_detected=0,
+            strength_distribution=[
+                StrengthDistributionItem(category="Very Weak (0-20)", count=0, percentage=0.0),
+                StrengthDistributionItem(category="Weak (21-40)", count=0, percentage=0.0),
+                StrengthDistributionItem(category="Moderate (41-60)", count=0, percentage=0.0),
+                StrengthDistributionItem(category="Strong (61-80)", count=0, percentage=0.0),
+                StrengthDistributionItem(category="Hardened (81-100)", count=0, percentage=0.0),
+            ],
+            activity_timeline=[],
+            recent_alerts=[],
+        )
 
     strong = db.query(SecurityAuditLog).filter(SecurityAuditLog.strength_score >= 60).count()
     weak = db.query(SecurityAuditLog).filter(SecurityAuditLog.strength_score < 40).count()

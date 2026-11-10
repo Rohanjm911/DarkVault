@@ -17,6 +17,7 @@ import { Input } from '../components/ui/Input';
 import { analyzePassword } from '../lib/crypto/entropy';
 import { PasswordAnalysis } from '../lib/types';
 import { generateSecurityReportPdf } from '../lib/pdf/pdfGenerator';
+import { recordSessionAudit } from '../lib/store/sessionTelemetryStore';
 import { useToast } from '../components/ui/ToastContext';
 
 interface AuditItemRecord {
@@ -66,6 +67,14 @@ export const AuditPage: React.FC = () => {
     setItems([...items, record]);
     setNewName('');
     setNewPassword('');
+
+    recordSessionAudit({
+      action: 'Batch Credential Audit',
+      score: record.analysis.score,
+      risk: record.analysis.grade === 'Hardened' ? 'SECURE' : (record.analysis.grade.toUpperCase() as any),
+      details: `Audited ${record.name} against NIST SP 800-63B (${record.analysis.nistCompliant ? 'Compliant' : 'Non-compliant'})`,
+      breached: false,
+    });
     toast({
       type: 'success',
       title: 'Credential Audited',

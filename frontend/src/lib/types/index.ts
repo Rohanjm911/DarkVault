@@ -77,6 +77,28 @@ export interface AuditItem {
   timestamp: string;
 }
 
+export interface StrengthDistributionItem {
+  category: string;
+  count: number;
+  percentage: number;
+}
+
+export interface ActivityTimelineItem {
+  id: string;
+  timestamp: string;
+  action: string;
+  risk: string;
+  details: string;
+}
+
+export interface AlertItem {
+  id: string;
+  severity: string;
+  title: string;
+  description: string;
+  time: string;
+}
+
 export interface DashboardMetrics {
   isDemoData: boolean;
   overallSecurityScore: number;
@@ -84,25 +106,9 @@ export interface DashboardMetrics {
   strongPasswords: number;
   weakPasswords: number;
   breachesDetected: number;
-  strengthDistribution: Array<{
-    category: string;
-    count: number;
-    percentage: number;
-  }>;
-  activityTimeline: Array<{
-    id: string;
-    timestamp: string;
-    action: string;
-    risk: string;
-    details: string;
-  }>;
-  recentAlerts: Array<{
-    id: string;
-    severity: string;
-    title: string;
-    description: string;
-    time: string;
-  }>;
+  strengthDistribution: StrengthDistributionItem[];
+  activityTimeline: ActivityTimelineItem[];
+  recentAlerts: AlertItem[];
 }
 
 export interface AppSettings {
