@@ -155,8 +155,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   return (
     <>
-      {/* Desktop Sidebar */}
-      <aside className="hidden md:block w-64 shrink-0 border-r border-white/[0.08] bg-[#080B14]/60 p-4">
+      {/* Desktop Sidebar (Sticky, stays locked on scroll) */}
+      <aside className="hidden md:block w-64 shrink-0 border-r border-white/[0.08] bg-[#080B14]/80 p-4 sticky top-16 self-start h-[calc(100vh-4rem)] overflow-y-auto overscroll-contain">
         {navContent}
       </aside>
 
