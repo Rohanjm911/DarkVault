@@ -20,7 +20,6 @@ import {
 } from 'recharts';
 import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/Card';
 import { Badge } from '../components/ui/Badge';
-import { Button } from '../components/ui/Button';
 import { PageHeader } from '../components/ui/PageHeader';
 import { Alert } from '../components/ui/Alert';
 import { EmptyState } from '../components/ui/EmptyState';
@@ -47,23 +46,11 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
     <div className="space-y-6">
       {/* Unified Command Center Page Header */}
       <PageHeader
-        moduleCode="// MODULE: 00_COMMAND_CENTER"
-        title="Security Telemetry Command Center"
+        moduleCode="COMMAND CENTER"
+        title="Security Command Center"
         description="Real-time cryptographic audit telemetry, fleet credential risk scoring, and NIST SP 800-63B policy posture."
-        badgeText={metrics.isDemoData ? 'DEMO TELEMETRY' : 'LIVE AUDIT POOL'}
+        badgeText={metrics.isDemoData ? 'DEMO DATASET' : 'LIVE AUDIT POOL'}
         badgeVariant={metrics.isDemoData ? 'amber' : 'green'}
-        actions={
-          !metrics.isDemoData && (
-            <Button
-              variant="secondary"
-              size="sm"
-              onClick={onToggleDemoData}
-              className="cursor-pointer font-mono text-xs"
-            >
-              Load Demo Dataset
-            </Button>
-          )
-        }
       />
       {/* Demo vs Real Data Banner */}
       {metrics.isDemoData && (
@@ -87,124 +74,107 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
         </Alert>
       )}
 
-      {/* Top Row: Radial Gauge Overview + 3 Stat Metric Cards */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
-        {/* Radial Score Gauge Card */}
-        <Card variant="glass" glow="blue" hoverEffect className="lg:col-span-4 flex flex-col justify-between">
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <div>
-              <CardTitle>Security Posture Index</CardTitle>
-              <p className="text-xs text-slate-400 mt-0.5">
-                Composite cryptographic benchmark
-              </p>
-            </div>
+      {/* Symmetrical 4-Card Executive Metric Deck */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 items-stretch">
+        {/* Card 1: Security Posture Gauge */}
+        <Card variant="glass" glow="blue" hoverEffect className="flex flex-col justify-between">
+          <CardHeader className="flex flex-row items-center justify-between pb-1">
+            <span className="text-[10px] font-mono font-semibold text-slate-400 tracking-wider whitespace-nowrap">
+              SECURITY POSTURE
+            </span>
             <Badge variant="blue" size="sm" dot>
-              Live SOC
+              Optimal
             </Badge>
           </CardHeader>
-          <CardContent className="flex flex-col sm:flex-row items-center justify-around gap-4 py-3">
-            <RadialScoreGauge score={metrics.overallSecurityScore} size={145} strokeWidth={11} />
-            <div className="space-y-2 text-center sm:text-left text-xs font-mono w-full sm:w-auto">
-              <div className="p-2 rounded-lg bg-[#080B14] border border-white/[0.06]">
-                <div className="text-[10px] text-slate-500 font-semibold tracking-wider">POLICY STANDARD</div>
-                <div className="text-xs font-bold text-slate-200 mt-0.5">NIST SP 800-63B</div>
-              </div>
-              <div className="p-2 rounded-lg bg-[#080B14] border border-white/[0.06]">
-                <div className="text-[10px] text-slate-500 font-semibold tracking-wider">THREAT DEFENSE</div>
-                <div className="text-xs font-bold text-[#43D6A0] mt-0.5">K-Anonymity Verified</div>
-              </div>
-            </div>
+          <CardContent className="flex items-center justify-center py-2">
+            <RadialScoreGauge score={metrics.overallSecurityScore} size={130} strokeWidth={10} />
           </CardContent>
-          <div className="p-2.5 px-5 bg-[#080B14]/50 border-t border-white/[0.06] text-[11px] font-mono text-slate-400 flex items-center justify-between">
-            <span>Audit Coverage</span>
-            <span className="text-[#638BFF] font-semibold">100% Volatile Memory</span>
+          <div className="p-2.5 px-4 bg-[#080B14]/40 border-t border-white/[0.06] text-[10px] font-mono text-slate-400 flex items-center justify-between">
+            <span>NIST SP 800-63B</span>
+            <span className="text-[#43D6A0] font-semibold">Verified</span>
           </div>
         </Card>
 
-        {/* 3 Metric Summary Cards */}
-        <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-3 gap-4">
-          {/* Total Analyses */}
-          <Card variant="glass" glow="purple" hoverEffect className="flex flex-col justify-between">
-            <CardContent className="p-5">
-              <div className="flex items-center justify-between">
-                <span className="text-[10px] font-mono font-semibold text-slate-400 tracking-wider whitespace-nowrap">
-                  TOTAL AUDITED
-                </span>
-                <div className="p-2 rounded-lg bg-[#936BFF]/15 text-[#936BFF]">
-                  <Activity className="w-4 h-4" />
-                </div>
-              </div>
-              <div className="mt-3">
-                <span className="text-3xl font-extrabold font-heading text-white tracking-tight">
-                  <AnimatedCounter value={metrics.totalAnalyses} />
-                </span>
-              </div>
-              <div className="mt-2 flex items-center gap-1.5 text-[11px] text-slate-400 font-mono">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#936BFF]" />
-                <span>Zero-Knowledge</span>
-              </div>
-            </CardContent>
-            <div className="p-2.5 px-4 bg-[#080B14]/40 border-t border-white/[0.06] text-[10px] font-mono text-slate-400 truncate">
-              Air-Gapped Sandbox
+        {/* Card 2: Total Audited */}
+        <Card variant="glass" glow="purple" hoverEffect className="flex flex-col justify-between">
+          <CardHeader className="flex flex-row items-center justify-between pb-1">
+            <span className="text-[10px] font-mono font-semibold text-slate-400 tracking-wider whitespace-nowrap">
+              TOTAL AUDITED
+            </span>
+            <div className="p-1.5 rounded-lg bg-[#936BFF]/15 text-[#936BFF]">
+              <Activity className="w-4 h-4" />
             </div>
-          </Card>
+          </CardHeader>
+          <CardContent className="py-2">
+            <div className="text-3xl sm:text-4xl font-extrabold font-heading text-white tracking-tight">
+              <AnimatedCounter value={metrics.totalAnalyses} />
+            </div>
+            <div className="mt-2 flex items-center gap-1.5 text-[11px] text-slate-400 font-mono">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#936BFF]" />
+              <span>Zero-Knowledge Session</span>
+            </div>
+          </CardContent>
+          <div className="p-2.5 px-4 bg-[#080B14]/40 border-t border-white/[0.06] text-[10px] font-mono text-slate-400 flex items-center justify-between">
+            <span>Air-Gapped Sandbox</span>
+            <span className="text-slate-300">Local Only</span>
+          </div>
+        </Card>
 
-          {/* Strong / Hardened */}
-          <Card variant="glass" glow="green" hoverEffect className="flex flex-col justify-between">
-            <CardContent className="p-5">
-              <div className="flex items-center justify-between">
-                <span className="text-[10px] font-mono font-semibold text-slate-400 tracking-wider whitespace-nowrap">
-                  STRONG SECRETS
-                </span>
-                <div className="p-2 rounded-lg bg-[#43D6A0]/15 text-[#43D6A0]">
-                  <CheckCircle2 className="w-4 h-4" />
-                </div>
-              </div>
-              <div className="mt-3">
-                <span className="text-3xl font-extrabold font-heading text-[#43D6A0] tracking-tight">
-                  <AnimatedCounter value={metrics.strongPasswords} />
-                </span>
-              </div>
-              <div className="mt-2 flex items-center gap-1.5 text-[11px] text-[#43D6A0] font-mono">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#43D6A0]" />
-                <span>
-                  {metrics.totalAnalyses > 0
-                    ? `${Math.round((metrics.strongPasswords / metrics.totalAnalyses) * 100)}% of audit pool`
-                    : '0% pool'}
-                </span>
-              </div>
-            </CardContent>
-            <div className="p-2.5 px-4 bg-[#080B14]/40 border-t border-white/[0.06] text-[10px] font-mono text-[#43D6A0] truncate">
-              Entropy &gt; 65 bits
+        {/* Card 3: Strong Secrets */}
+        <Card variant="glass" glow="green" hoverEffect className="flex flex-col justify-between">
+          <CardHeader className="flex flex-row items-center justify-between pb-1">
+            <span className="text-[10px] font-mono font-semibold text-slate-400 tracking-wider whitespace-nowrap">
+              STRONG SECRETS
+            </span>
+            <div className="p-1.5 rounded-lg bg-[#43D6A0]/15 text-[#43D6A0]">
+              <CheckCircle2 className="w-4 h-4" />
             </div>
-          </Card>
+          </CardHeader>
+          <CardContent className="py-2">
+            <div className="text-3xl sm:text-4xl font-extrabold font-heading text-[#43D6A0] tracking-tight">
+              <AnimatedCounter value={metrics.strongPasswords} />
+            </div>
+            <div className="mt-2 flex items-center gap-1.5 text-[11px] text-[#43D6A0] font-mono">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#43D6A0]" />
+              <span>
+                {metrics.totalAnalyses > 0
+                  ? `${Math.round((metrics.strongPasswords / metrics.totalAnalyses) * 100)}% of audit pool`
+                  : '0% pool'}
+              </span>
+            </div>
+          </CardContent>
+          <div className="p-2.5 px-4 bg-[#080B14]/40 border-t border-white/[0.06] text-[10px] font-mono text-slate-400 flex items-center justify-between">
+            <span>Entropy Target</span>
+            <span className="text-[#43D6A0] font-semibold">&gt; 65 bits</span>
+          </div>
+        </Card>
 
-          {/* Known Breaches */}
-          <Card variant="glass" glow="danger" hoverEffect className="flex flex-col justify-between">
-            <CardContent className="p-5">
-              <div className="flex items-center justify-between">
-                <span className="text-[10px] font-mono font-semibold text-slate-400 tracking-wider whitespace-nowrap">
-                  BREACH HITS
-                </span>
-                <div className="p-2 rounded-lg bg-[#F06475]/15 text-[#F06475]">
-                  <Database className="w-4 h-4" />
-                </div>
-              </div>
-              <div className="mt-3">
-                <span className="text-3xl font-extrabold font-heading text-[#F06475] tracking-tight">
-                  <AnimatedCounter value={metrics.breachesDetected} />
-                </span>
-              </div>
-              <div className="mt-2 flex items-center gap-1.5 text-[11px] text-[#F06475] font-mono font-semibold">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#F06475] animate-pulse" />
-                <span>Critical Exposure</span>
-              </div>
-            </CardContent>
-            <div className="p-2.5 px-4 bg-[#080B14]/40 border-t border-white/[0.06] text-[10px] font-mono text-slate-400 truncate">
-              HIBP 1B+ Database
+        {/* Card 4: Breach Hits */}
+        <Card variant="glass" glow="danger" hoverEffect className="flex flex-col justify-between">
+          <CardHeader className="flex flex-row items-center justify-between pb-1">
+            <span className="text-[10px] font-mono font-semibold text-slate-400 tracking-wider whitespace-nowrap">
+              BREACH HITS
+            </span>
+            <div className="p-1.5 rounded-lg bg-[#F06475]/15 text-[#F06475]">
+              <Database className="w-4 h-4" />
             </div>
-          </Card>
-        </div>
+          </CardHeader>
+          <CardContent className="py-2">
+            <div className="text-3xl sm:text-4xl font-extrabold font-heading text-[#F06475] tracking-tight">
+              <AnimatedCounter value={metrics.breachesDetected} />
+            </div>
+            <div className="mt-2 flex items-center gap-1.5 text-[11px] text-[#F06475] font-mono font-semibold">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#F06475] animate-pulse" />
+              <span>
+                {metrics.breachesDetected > 0 ? 'Critical Exposure' : 'Zero Leaks Detected'}
+              </span>
+            </div>
+          </CardContent>
+          <div className="p-2.5 px-4 bg-[#080B14]/40 border-t border-white/[0.06] text-[10px] font-mono text-slate-400 flex items-center justify-between">
+            <span>HIBP Repository</span>
+            <span className="text-slate-300">1B+ Records</span>
+          </div>
+        </Card>
       </div>
 
       {/* Main Charts & Quick Action Shortcuts */}

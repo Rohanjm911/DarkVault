@@ -46,7 +46,7 @@ export const Badge: React.FC<BadgeProps> = ({
     <span
       className={twMerge(
         clsx(
-          'inline-flex items-center gap-1.5 transition-all select-none',
+          'inline-flex items-center gap-1.5 transition-all select-none whitespace-nowrap shrink-0',
           variantStyles[variant],
           sizeStyles[size],
           className

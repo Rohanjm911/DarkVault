@@ -2,7 +2,7 @@ import React from 'react';
 import { Badge } from './Badge';
 
 interface PageHeaderProps {
-  moduleCode: string;
+  moduleCode?: string;
   title: string;
   description: string;
   badgeText?: string;
@@ -18,19 +18,27 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
   badgeVariant = 'blue',
   actions,
 }) => {
+  const cleanModule = moduleCode
+    ? moduleCode.replace(/^\/\/\s*MODULE:\s*\d+_/i, '').replace(/_/g, ' ')
+    : null;
+
   return (
     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-white/[0.06]">
       <div>
-        <div className="flex items-center gap-2 mb-1">
-          <span className="text-[10px] font-mono font-bold tracking-widest uppercase text-[#638BFF]/90">
-            {moduleCode}
-          </span>
-          {badgeText && (
-            <Badge variant={badgeVariant} size="sm" dot>
-              {badgeText}
-            </Badge>
-          )}
-        </div>
+        {(cleanModule || badgeText) && (
+          <div className="flex items-center gap-2 mb-1">
+            {cleanModule && (
+              <span className="text-[10px] font-mono font-bold tracking-widest uppercase text-[#638BFF]/90">
+                {cleanModule}
+              </span>
+            )}
+            {badgeText && (
+              <Badge variant={badgeVariant} size="sm" dot>
+                {badgeText}
+              </Badge>
+            )}
+          </div>
+        )}
         <h1 className="text-xl sm:text-2xl font-heading font-bold text-white tracking-tight">
           {title}
         </h1>

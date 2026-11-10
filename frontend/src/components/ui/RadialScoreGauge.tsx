@@ -153,19 +153,27 @@ export const RadialScoreGauge: React.FC<RadialScoreGaugeProps> = ({
 
       {/* Center 3D Floating Readout */}
       <div className="absolute inset-0 flex flex-col items-center justify-center text-center z-20 pointer-events-none">
-        <span className="text-[10px] font-mono tracking-widest text-slate-400 uppercase font-semibold">
+        <span
+          className={`font-mono tracking-widest text-slate-400 uppercase font-semibold ${
+            size < 150 ? 'text-[9px]' : 'text-[10px]'
+          }`}
+        >
           INDEX
         </span>
         <motion.span
           initial={{ scale: 0.7, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.1, type: 'spring', damping: 15 }}
-          className="text-4xl font-extrabold font-heading text-white tracking-tight my-0.5 drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]"
+          className={`font-extrabold font-heading text-white tracking-tight my-0.5 drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)] ${
+            size < 150 ? 'text-3xl' : 'text-4xl'
+          }`}
         >
           {score}
         </motion.span>
         <span
-          className={`text-[9px] font-mono font-bold tracking-widest uppercase px-2 py-0.5 rounded-full border shadow-sm ${tierColor} ${tierBadgeBg}`}
+          className={`font-mono font-bold tracking-widest uppercase rounded-full border shadow-sm ${tierColor} ${tierBadgeBg} ${
+            size < 150 ? 'text-[8px] px-1.5 py-0.5' : 'text-[9px] px-2 py-0.5'
+          }`}
         >
           {tier}
         </span>

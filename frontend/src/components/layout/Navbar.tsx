@@ -96,12 +96,18 @@ export const Navbar: React.FC<NavbarProps> = ({
             className={`flex items-center gap-2 px-3 py-1.5 text-xs font-mono rounded-lg border transition-all cursor-pointer ${
               isDemoData
                 ? 'bg-[#F5B942]/15 border-[#F5B942]/35 text-[#F5B942] hover:bg-[#F5B942]/25 shadow-[0_0_12px_rgba(245,185,66,0.15)]'
-                : 'bg-[#111827] border-slate-700/80 text-slate-300 hover:bg-slate-800'
+                : 'bg-[#111827] border-white/[0.08] text-slate-300 hover:bg-slate-800'
             }`}
-            title="Toggle between real telemetry and demonstration dataset"
+            title="Toggle between live telemetry and demonstration dataset"
           >
-            <span className={`w-1.5 h-1.5 rounded-full ${isDemoData ? 'bg-[#F5B942] animate-pulse' : 'bg-slate-500'}`} />
-            <span className="font-semibold text-[11px]">{isDemoData ? 'DEMO DATA' : 'LIVE METRICS'}</span>
+            <span
+              className={`w-1.5 h-1.5 rounded-full ${
+                isDemoData ? 'bg-[#F5B942] animate-pulse' : 'bg-[#43D6A0]'
+              }`}
+            />
+            <span className="font-semibold text-[11px] whitespace-nowrap">
+              {isDemoData ? 'DEMO DATA' : 'LIVE DATA'}
+            </span>
           </button>
 
           <Button
