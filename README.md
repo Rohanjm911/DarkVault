@@ -95,7 +95,7 @@
 
 ### 2. Run with Docker Compose
 ```bash
-git clone https://github.com/your-username/DarkVault.git
+git clone https://github.com/Rohanjm911/DarkVault.git
 cd DarkVault
 docker compose up --build
 ```
