@@ -65,13 +65,18 @@
     background-color: var(--bg-primary);
     color: #e2e8f0;
     font-family: var(--font-sans);
-    min-height: 100vh;
+    min-height: 100dvh;
     overflow-x: hidden;
+    overflow-wrap: anywhere;
     margin: 0;
     padding: 0;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+  }
+
+  button, a, input, select, textarea {
+    touch-action: manipulation;
   }
 
   h1, h2, h3, h4, .font-heading {

@@ -149,7 +149,7 @@ export const GeneratorPage: React.FC<GeneratorPageProps> = ({ onSendToAnalyzer }
               </div>
             </div>
 
-            <div className="flex items-center gap-2 shrink-0">
+            <div className="flex flex-wrap items-center justify-center sm:justify-end gap-2 w-full sm:w-auto shrink-0">
               <Button
                 variant="primary"
                 size="md"
@@ -473,7 +473,7 @@ export const GeneratorPage: React.FC<GeneratorPageProps> = ({ onSendToAnalyzer }
                   <span className="font-bold text-slate-200 truncate max-w-[200px] sm:max-w-[260px]">
                     {item.password}
                   </span>
-                  <div className="flex items-center gap-2 shrink-0">
+                  <div className="flex flex-wrap items-center justify-center sm:justify-end gap-2 w-full sm:w-auto shrink-0">
                     <Badge variant={item.analysis.score >= 70 ? 'green' : 'amber'} size="sm">
                       {item.analysis.entropyBits.toFixed(0)} bits
                     </Badge>

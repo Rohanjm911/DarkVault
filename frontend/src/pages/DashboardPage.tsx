@@ -206,6 +206,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                     tickLine={false}
                     interval={0}
                     fontFamily="'JetBrains Mono', monospace"
+                    tickFormatter={(val: string) => val.split(' ')[0]}
                   />
                   <YAxis
                     stroke="#64748b"
@@ -234,7 +235,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
               </ResponsiveContainer>
             </div>
 
-            <div className="grid grid-cols-5 gap-2 mt-4 pt-3 border-t border-white/[0.06] text-center text-xs">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 mt-4 pt-3 border-t border-white/[0.06] text-center text-xs">
               {metrics.strengthDistribution.map((item) => (
                 <div key={item.category} className="space-y-1">
                   <div className="text-[10px] font-mono text-slate-400 truncate">{item.category.split(' ')[0]}</div>

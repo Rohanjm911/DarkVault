@@ -80,12 +80,12 @@ export const Modal: React.FC<ModalProps> = ({
                   type="button"
                   onClick={onClose}
                   aria-label="Close modal dialog"
-                  className="p-1 text-slate-400 hover:text-slate-100 hover:bg-slate-800/60 rounded-lg transition-colors cursor-pointer"
+                  className="p-2 text-slate-400 hover:text-slate-100 hover:bg-slate-800/60 rounded-lg transition-colors cursor-pointer"
                 >
                   <X className="w-4 h-4" />
                 </button>
               </CardHeader>
-              <CardContent className="max-h-[80vh] overflow-y-auto overscroll-contain">
+              <CardContent className="max-h-[85dvh] overflow-y-auto overscroll-contain">
                 {children}
               </CardContent>
             </Card>

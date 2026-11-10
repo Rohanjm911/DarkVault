@@ -180,20 +180,22 @@ export const Sidebar: React.FC<SidebarProps> = ({
               animate={{ x: 0 }}
               exit={{ x: -280 }}
               transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-              className="relative w-72 max-w-[85vw] bg-[#0D1320] border-r border-white/[0.08] p-5 shadow-2xl z-10 flex flex-col justify-between"
+              className="relative w-72 max-w-[85vw] h-[100dvh] bg-[#0D1320] border-r border-white/[0.08] p-5 shadow-2xl z-10 flex flex-col justify-between overflow-y-auto overscroll-contain"
             >
-              <div>
-                <div className="flex items-center justify-between pb-4 mb-4 border-b border-white/[0.08]">
-                  <span className="font-heading font-bold text-white tracking-wider text-base">
-                    DARK<span className="text-[#638BFF]">VAULT</span>
-                  </span>
-                  <button
-                    onClick={onCloseMobile}
-                    className="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 transition-colors"
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
-                </div>
+              <div className="flex items-center justify-between pb-4 mb-4 border-b border-white/[0.08] shrink-0">
+                <span className="font-heading font-bold text-white tracking-wider text-base">
+                  DARK<span className="text-[#638BFF]">VAULT</span>
+                </span>
+                <button
+                  type="button"
+                  onClick={onCloseMobile}
+                  className="p-2 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 transition-colors cursor-pointer"
+                  aria-label="Close mobile navigation"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+              <div className="flex-1 flex flex-col justify-between">
                 {navContent}
               </div>
             </motion.div>
