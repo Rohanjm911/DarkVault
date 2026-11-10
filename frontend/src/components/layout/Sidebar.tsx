@@ -141,9 +141,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
       </div>
 
       {/* Cyber Mini Security Status Card */}
-      <div className="mt-6 p-3.5 rounded-xl bg-[#0D1320] border border-white/[0.08] shadow-inner">
+      <div className="mt-6 p-3.5 rounded-xl glass-card holo-sheen border border-white/[0.08] shadow-inner">
         <div className="flex items-center gap-2 text-xs font-mono text-[#43D6A0] font-semibold mb-1">
-          <div className="w-2 h-2 rounded-full bg-[#43D6A0] animate-ping" />
+          <div className="w-2 h-2 rounded-full bg-[#43D6A0] animate-pulse" />
           <span>VAULT ENGINE: ACTIVE</span>
         </div>
         <p className="text-[11px] text-slate-400 leading-relaxed font-sans">

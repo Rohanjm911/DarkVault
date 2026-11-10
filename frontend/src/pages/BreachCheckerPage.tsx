@@ -80,7 +80,7 @@ export const BreachCheckerPage: React.FC<BreachCheckerPageProps> = ({
       </Alert>
 
       {/* Input Card */}
-      <Card variant="glass" glow="blue">
+      <Card variant="glass" glow="blue" hoverEffect>
         <CardContent className="p-6">
           <form onSubmit={handleSearch} className="space-y-4">
             <label className="text-xs font-mono font-medium text-slate-300 uppercase tracking-wider block">
@@ -175,6 +175,7 @@ export const BreachCheckerPage: React.FC<BreachCheckerPageProps> = ({
         <Card
           variant="glass"
           glow={breachStatus.breached ? 'danger' : 'green'}
+          hoverEffect
           className={breachStatus.breached ? 'border-[#F06475]/40' : 'border-[#43D6A0]/40'}
         >
           <CardContent className="p-6">
@@ -247,7 +248,7 @@ export const BreachCheckerPage: React.FC<BreachCheckerPageProps> = ({
       )}
 
       {/* Visual K-Anonymity Architecture Diagram */}
-      <Card variant="glass">
+      <Card variant="glass" hoverEffect>
         <CardHeader>
           <CardTitle>How K-Anonymity Mathematical Privacy Works</CardTitle>
           <p className="text-xs text-slate-400 mt-0.5">

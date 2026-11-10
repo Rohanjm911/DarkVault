@@ -116,7 +116,7 @@ export const AnalyzerPage: React.FC<AnalyzerPageProps> = ({
       </Alert>
 
       {/* Main Password Input Card */}
-      <Card variant="glass" glow="blue">
+      <Card variant="glass" glow="blue" hoverEffect>
         <CardContent className="p-6">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-3">
             <label className="text-xs font-mono font-medium text-slate-300 uppercase tracking-wider flex items-center gap-2">
@@ -183,7 +183,7 @@ export const AnalyzerPage: React.FC<AnalyzerPageProps> = ({
       {/* Metrics Row: Score, Entropy, Pool */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {/* Strength Score Card */}
-        <Card variant="glass" glow="blue">
+        <Card variant="glass" glow="blue" hoverEffect>
           <CardContent className="p-5">
             <div className="flex items-center justify-between text-xs font-mono text-slate-400">
               <span>SECURITY SCORE</span>
@@ -204,7 +204,7 @@ export const AnalyzerPage: React.FC<AnalyzerPageProps> = ({
         </Card>
 
         {/* Shannon Entropy */}
-        <Card variant="glass" glow="purple">
+        <Card variant="glass" glow="purple" hoverEffect>
           <CardContent className="p-5">
             <div className="flex items-center justify-between text-xs font-mono text-slate-400">
               <Tooltip content="H = L * log2(N) minus dictionary, repeat & keyboard pattern deductions">
@@ -231,7 +231,7 @@ export const AnalyzerPage: React.FC<AnalyzerPageProps> = ({
         </Card>
 
         {/* Character Pool & Diversity */}
-        <Card variant="glass" glow="green">
+        <Card variant="glass" glow="green" hoverEffect>
           <CardContent className="p-5">
             <div className="flex items-center justify-between text-xs font-mono text-slate-400">
               <Tooltip content="Total unique character set size used in candidate keyspace calculation">
@@ -257,7 +257,7 @@ export const AnalyzerPage: React.FC<AnalyzerPageProps> = ({
       {/* Character Composition & Threat Model Crack Times */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Character Diversity Grid */}
-        <Card variant="glass">
+        <Card variant="glass" hoverEffect>
           <CardHeader>
             <CardTitle>Character Composition Analysis</CardTitle>
             <p className="text-xs text-slate-400 mt-0.5">
@@ -342,7 +342,7 @@ export const AnalyzerPage: React.FC<AnalyzerPageProps> = ({
         </Card>
 
         {/* Threat Model Crack Time Table */}
-        <Card variant="glass">
+        <Card variant="glass" hoverEffect>
           <CardHeader>
             <CardTitle>Attack Vector Resilience</CardTitle>
             <p className="text-xs text-slate-400 mt-0.5">
@@ -408,7 +408,7 @@ export const AnalyzerPage: React.FC<AnalyzerPageProps> = ({
       {/* Identified Patterns & Hardening Action Bar */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Identified Patterns */}
-        <Card variant="glass">
+        <Card variant="glass" hoverEffect>
           <CardHeader>
             <CardTitle>Identified Weak Patterns &amp; Sequences</CardTitle>
             <p className="text-xs text-slate-400 mt-0.5">
@@ -468,7 +468,7 @@ export const AnalyzerPage: React.FC<AnalyzerPageProps> = ({
         </Card>
 
         {/* Security Recommendations & Action Bar */}
-        <Card variant="glass">
+        <Card variant="glass" hoverEffect>
           <CardHeader>
             <CardTitle>Hardening Recommendations</CardTitle>
             <p className="text-xs text-slate-400 mt-0.5">

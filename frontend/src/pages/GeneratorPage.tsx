@@ -54,6 +54,18 @@ export const GeneratorPage: React.FC<GeneratorPageProps> = ({ onSendToAnalyzer }
   const handleGenerate = useCallback(() => {
     setSeed((s) => s + 1);
     setCopied(false);
+    try {
+      confetti({
+        particleCount: 25,
+        spread: 60,
+        origin: { y: 0.35 },
+        colors: ['#00F0FF', '#638BFF', '#936BFF', '#43D6A0'],
+        ticks: 70,
+        gravity: 1.2,
+      });
+    } catch {
+      // ignore
+    }
   }, []);
 
   const handleBulkGenerate = () => {
@@ -122,14 +134,17 @@ export const GeneratorPage: React.FC<GeneratorPageProps> = ({ onSendToAnalyzer }
       </Alert>
 
       {/* Main Generator Display Card */}
-      <Card variant="glass" glow="green">
+      <Card variant="glass" glow="green" hoverEffect>
         <CardContent className="p-6">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 rounded-xl bg-[#080B14] border border-white/[0.08]">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-5 rounded-2xl bg-[#080B14]/80 border border-[#43D6A0]/20 shadow-[0_0_30px_rgba(67,214,160,0.08)] backdrop-blur-md">
             <div className="w-full overflow-hidden text-center sm:text-left">
-              <span className="text-[10px] font-mono uppercase text-slate-500 tracking-wider block mb-1">
-                Generated Cryptographic Secret
-              </span>
-              <div className="font-mono text-lg sm:text-xl font-bold text-white tracking-wide break-all select-all">
+              <div className="flex items-center gap-2 mb-1.5 justify-center sm:justify-start">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#43D6A0] animate-pulse" />
+                <span className="text-[10px] font-mono uppercase text-slate-400 tracking-widest font-semibold">
+                  Active Cryptographic Secret
+                </span>
+              </div>
+              <div className="font-mono text-lg sm:text-2xl font-bold text-white tracking-wider break-all select-all drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
                 {generatedPassword || 'Generating...'}
               </div>
             </div>
@@ -199,7 +214,7 @@ export const GeneratorPage: React.FC<GeneratorPageProps> = ({ onSendToAnalyzer }
       {/* Generator Configuration Options */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Mode & Length Controls */}
-        <Card variant="glass">
+        <Card variant="glass" hoverEffect>
           <CardHeader>
             <CardTitle>Generation Engine Mode</CardTitle>
             <p className="text-xs text-slate-400 mt-0.5 font-sans">
@@ -409,7 +424,7 @@ export const GeneratorPage: React.FC<GeneratorPageProps> = ({ onSendToAnalyzer }
         </Card>
 
         {/* Bulk Generation Card */}
-        <Card variant="glass">
+        <Card variant="glass" hoverEffect>
           <CardHeader className="flex flex-row items-center justify-between">
             <div>
               <CardTitle>Batch Credential Generator</CardTitle>

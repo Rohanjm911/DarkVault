@@ -83,7 +83,7 @@ export const ReportsPage: React.FC<ReportsPageProps> = ({
 
       {/* Report Configuration & Export Controls */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <Card variant="glass" glow="blue" className="lg:col-span-1">
+        <Card variant="glass" glow="blue" hoverEffect className="lg:col-span-1">
           <CardHeader>
             <CardTitle>Report Parameters</CardTitle>
             <p className="text-xs text-slate-400 mt-0.5 font-sans">
@@ -167,7 +167,7 @@ export const ReportsPage: React.FC<ReportsPageProps> = ({
         </Card>
 
         {/* Live Document Preview Card */}
-        <Card variant="glass" className="lg:col-span-2">
+        <Card variant="glass" hoverEffect className="lg:col-span-2">
           <CardHeader className="flex flex-row items-center justify-between">
             <div>
               <CardTitle>Live Report Document Preview</CardTitle>

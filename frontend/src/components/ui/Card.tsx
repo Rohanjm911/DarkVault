@@ -26,19 +26,19 @@ export const Card: React.FC<CardProps> = ({
   };
 
   const variantStyles = {
-    glass: 'bg-[#111827]/80 backdrop-blur-md border border-white/[0.08]',
-    solid: 'bg-[#111827] border border-slate-800',
-    subtle: 'bg-[#0D1320]/70 border border-slate-800/60',
+    glass: 'glass-card',
+    solid: 'bg-[#111827] border border-slate-800 shadow-xl',
+    subtle: 'glass-panel',
   };
 
   return (
     <div
       className={twMerge(
         clsx(
-          'rounded-2xl transition-all duration-200 overflow-hidden',
+          'rounded-2xl transition-all duration-300 overflow-hidden',
           variantStyles[variant],
           glowStyles[glow],
-          hoverEffect && 'hover:-translate-y-0.5 hover:shadow-xl',
+          hoverEffect && 'hover:-translate-y-1 hover:shadow-2xl holo-sheen cursor-default',
           className
         )
       )}

@@ -155,7 +155,7 @@ export const AuditPage: React.FC = () => {
 
       {/* Aggregate Audit Scorecards */}
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-        <Card variant="glass" glow="blue">
+        <Card variant="glass" glow="blue" hoverEffect>
           <CardContent className="p-4">
             <span className="text-[10px] font-mono text-slate-400">TOTAL AUDITED</span>
             <div className="text-2xl font-bold font-heading text-white mt-1">{total}</div>
@@ -163,7 +163,7 @@ export const AuditPage: React.FC = () => {
           </CardContent>
         </Card>
 
-        <Card variant="glass" glow="green">
+        <Card variant="glass" glow="green" hoverEffect>
           <CardContent className="p-4">
             <span className="text-[10px] font-mono text-slate-400">NIST COMPLIANCE RATE</span>
             <div className="text-2xl font-bold font-heading text-[#43D6A0] mt-1">
@@ -173,7 +173,7 @@ export const AuditPage: React.FC = () => {
           </CardContent>
         </Card>
 
-        <Card variant="glass" glow="purple">
+        <Card variant="glass" glow="purple" hoverEffect>
           <CardContent className="p-4">
             <span className="text-[10px] font-mono text-slate-400">AVERAGE SCORE</span>
             <div className="text-2xl font-bold font-heading text-[#936BFF] mt-1">{averageScore} / 100</div>
@@ -181,7 +181,7 @@ export const AuditPage: React.FC = () => {
           </CardContent>
         </Card>
 
-        <Card variant="glass" glow="danger">
+        <Card variant="glass" glow="danger" hoverEffect>
           <CardContent className="p-4">
             <span className="text-[10px] font-mono text-slate-400">VULNERABILITY FLAGS</span>
             <div className="text-2xl font-bold font-heading text-[#F06475] mt-1">{highRiskCount}</div>
@@ -191,7 +191,7 @@ export const AuditPage: React.FC = () => {
       </div>
 
       {/* Batch Auditor Input Form */}
-      <Card variant="glass">
+      <Card variant="glass" hoverEffect>
         <CardHeader>
           <CardTitle>Add Credential to Audit Batch</CardTitle>
           <p className="text-xs text-slate-400 mt-0.5 font-sans">
@@ -235,7 +235,7 @@ export const AuditPage: React.FC = () => {
       </Card>
 
       {/* Audit Inventory Table */}
-      <Card variant="glass">
+      <Card variant="glass" hoverEffect>
         <CardHeader className="flex flex-row items-center justify-between">
           <div>
             <CardTitle>Batch Security Checklist &amp; Inventory</CardTitle>

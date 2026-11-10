@@ -83,7 +83,7 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Privacy & Data Retention */}
-        <Card variant="glass" glow="blue">
+        <Card variant="glass" glow="blue" hoverEffect>
           <CardHeader>
             <CardTitle>Zero-Knowledge Privacy Controls</CardTitle>
             <p className="text-xs text-slate-400 mt-0.5 font-sans">
@@ -201,7 +201,7 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({
         {/* Theme & About Section */}
         <div className="space-y-6">
           {/* Accent Color Selection */}
-          <Card variant="glass">
+          <Card variant="glass" hoverEffect>
             <CardHeader>
               <CardTitle>Cyber Command Theme Accents</CardTitle>
               <p className="text-xs text-slate-400 mt-0.5 font-sans">
@@ -253,7 +253,7 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({
           </Card>
 
           {/* About DarkVault */}
-          <Card variant="glass">
+          <Card variant="glass" hoverEffect>
             <CardHeader>
               <CardTitle>System Architecture &amp; Integrity</CardTitle>
               <p className="text-xs text-slate-400 mt-0.5 font-sans">

@@ -210,7 +210,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
       {/* Main Charts & Quick Action Shortcuts */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Strength Distribution Chart */}
-        <Card variant="glass" className="lg:col-span-2">
+        <Card variant="glass" hoverEffect className="lg:col-span-2">
           <CardHeader className="flex flex-row items-center justify-between">
             <div>
               <CardTitle>Password Strength Distribution</CardTitle>
@@ -287,14 +287,14 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
           <CardContent className="space-y-2.5">
             <button
               onClick={() => onNavigate('analyzer')}
-              className="w-full flex items-center justify-between p-3 rounded-xl bg-[#0D1320] border border-white/[0.08] hover:border-[#638BFF]/50 hover:bg-slate-800/60 transition-all text-left cursor-pointer group"
+              className="w-full flex items-center justify-between p-3 rounded-xl bg-[#080B14]/80 border border-white/[0.08] hover:border-[#638BFF]/50 hover:bg-[#0D1320] transition-all text-left cursor-pointer group glass-card holo-sheen hover:-translate-y-0.5 hover:shadow-lg shadow-black/30"
             >
               <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-[#638BFF]/15 text-[#638BFF] group-hover:scale-110 transition-transform">
+                <div className="p-2 rounded-lg bg-[#638BFF]/15 text-[#638BFF] group-hover:scale-110 group-hover:shadow-[0_0_12px_rgba(99,139,255,0.4)] transition-all">
                   <ShieldCheck className="w-4 h-4" />
                 </div>
                 <div>
-                  <div className="text-xs font-semibold text-slate-100 font-heading group-hover:text-[#638BFF]">
+                  <div className="text-xs font-semibold text-slate-100 font-heading group-hover:text-[#638BFF] transition-colors">
                     Password Analyzer
                   </div>
                   <div className="text-[11px] text-slate-400 font-sans">
@@ -302,19 +302,19 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                   </div>
                 </div>
               </div>
-              <ArrowUpRight className="w-4 h-4 text-slate-500 group-hover:text-[#638BFF] transition-colors" />
+              <ArrowUpRight className="w-4 h-4 text-slate-500 group-hover:text-[#638BFF] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
             </button>
 
             <button
               onClick={() => onNavigate('breach')}
-              className="w-full flex items-center justify-between p-3 rounded-xl bg-[#0D1320] border border-white/[0.08] hover:border-[#F06475]/50 hover:bg-slate-800/60 transition-all text-left cursor-pointer group"
+              className="w-full flex items-center justify-between p-3 rounded-xl bg-[#080B14]/80 border border-white/[0.08] hover:border-[#F06475]/50 hover:bg-[#0D1320] transition-all text-left cursor-pointer group glass-card holo-sheen hover:-translate-y-0.5 hover:shadow-lg shadow-black/30"
             >
               <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-[#F06475]/15 text-[#F06475] group-hover:scale-110 transition-transform">
+                <div className="p-2 rounded-lg bg-[#F06475]/15 text-[#F06475] group-hover:scale-110 group-hover:shadow-[0_0_12px_rgba(240,100,117,0.4)] transition-all">
                   <Database className="w-4 h-4" />
                 </div>
                 <div>
-                  <div className="text-xs font-semibold text-slate-100 font-heading group-hover:text-[#F06475]">
+                  <div className="text-xs font-semibold text-slate-100 font-heading group-hover:text-[#F06475] transition-colors">
                     Breach Range Checker
                   </div>
                   <div className="text-[11px] text-slate-400 font-sans">
@@ -322,19 +322,19 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                   </div>
                 </div>
               </div>
-              <ArrowUpRight className="w-4 h-4 text-slate-500 group-hover:text-[#F06475] transition-colors" />
+              <ArrowUpRight className="w-4 h-4 text-slate-500 group-hover:text-[#F06475] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
             </button>
 
             <button
               onClick={() => onNavigate('generator')}
-              className="w-full flex items-center justify-between p-3 rounded-xl bg-[#0D1320] border border-white/[0.08] hover:border-[#43D6A0]/50 hover:bg-slate-800/60 transition-all text-left cursor-pointer group"
+              className="w-full flex items-center justify-between p-3 rounded-xl bg-[#080B14]/80 border border-white/[0.08] hover:border-[#43D6A0]/50 hover:bg-[#0D1320] transition-all text-left cursor-pointer group glass-card holo-sheen hover:-translate-y-0.5 hover:shadow-lg shadow-black/30"
             >
               <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-[#43D6A0]/15 text-[#43D6A0] group-hover:scale-110 transition-transform">
+                <div className="p-2 rounded-lg bg-[#43D6A0]/15 text-[#43D6A0] group-hover:scale-110 group-hover:shadow-[0_0_12px_rgba(67,214,160,0.4)] transition-all">
                   <KeyRound className="w-4 h-4" />
                 </div>
                 <div>
-                  <div className="text-xs font-semibold text-slate-100 font-heading group-hover:text-[#43D6A0]">
+                  <div className="text-xs font-semibold text-slate-100 font-heading group-hover:text-[#43D6A0] transition-colors">
                     Key Generator
                   </div>
                   <div className="text-[11px] text-slate-400 font-sans">
@@ -342,19 +342,19 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                   </div>
                 </div>
               </div>
-              <ArrowUpRight className="w-4 h-4 text-slate-500 group-hover:text-[#43D6A0] transition-colors" />
+              <ArrowUpRight className="w-4 h-4 text-slate-500 group-hover:text-[#43D6A0] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
             </button>
 
             <button
               onClick={() => onNavigate('audit')}
-              className="w-full flex items-center justify-between p-3 rounded-xl bg-[#0D1320] border border-white/[0.08] hover:border-[#936BFF]/50 hover:bg-slate-800/60 transition-all text-left cursor-pointer group"
+              className="w-full flex items-center justify-between p-3 rounded-xl bg-[#080B14]/80 border border-white/[0.08] hover:border-[#936BFF]/50 hover:bg-[#0D1320] transition-all text-left cursor-pointer group glass-card holo-sheen hover:-translate-y-0.5 hover:shadow-lg shadow-black/30"
             >
               <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-[#936BFF]/15 text-[#936BFF] group-hover:scale-110 transition-transform">
+                <div className="p-2 rounded-lg bg-[#936BFF]/15 text-[#936BFF] group-hover:scale-110 group-hover:shadow-[0_0_12px_rgba(147,107,255,0.4)] transition-all">
                   <FileCheck2 className="w-4 h-4" />
                 </div>
                 <div>
-                  <div className="text-xs font-semibold text-slate-100 font-heading group-hover:text-[#936BFF]">
+                  <div className="text-xs font-semibold text-slate-100 font-heading group-hover:text-[#936BFF] transition-colors">
                     NIST Security Audit
                   </div>
                   <div className="text-[11px] text-slate-400 font-sans">
@@ -362,7 +362,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                   </div>
                 </div>
               </div>
-              <ArrowUpRight className="w-4 h-4 text-slate-500 group-hover:text-[#936BFF] transition-colors" />
+              <ArrowUpRight className="w-4 h-4 text-slate-500 group-hover:text-[#936BFF] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
             </button>
           </CardContent>
         </Card>
@@ -371,7 +371,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
       {/* Timeline & Alerts Row */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Activity Timeline */}
-        <Card variant="glass">
+        <Card variant="glass" hoverEffect>
           <CardHeader>
             <CardTitle>Security Activity Timeline</CardTitle>
             <p className="text-xs text-slate-400 mt-0.5">
@@ -414,7 +414,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
         </Card>
 
         {/* Security Alerts */}
-        <Card variant="glass">
+        <Card variant="glass" hoverEffect>
           <CardHeader>
             <CardTitle>Active Security Alerts</CardTitle>
             <p className="text-xs text-slate-400 mt-0.5">
