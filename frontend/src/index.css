@@ -1,0 +1,179 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-primary: #080B14;
+    --bg-secondary: #0D1320;
+    --bg-card: #111827;
+    --border-color: #1e293b;
+    --border-subtle: rgba(255, 255, 255, 0.08);
+
+    --accent-blue: #638BFF;
+    --accent-purple: #936BFF;
+    --color-success: #43D6A0;
+    --color-warning: #F5B942;
+    --color-danger: #F06475;
+
+    --font-heading: 'Space Grotesk', system-ui, sans-serif;
+    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    
+    color-scheme: dark;
+  }
+
+  * {
+    border-color: var(--border-color);
+  }
+
+  *:focus-visible {
+    outline: 2px solid var(--accent-blue);
+    outline-offset: 2px;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: #1e293b #080B14;
+  }
+
+  body {
+    background-color: var(--bg-primary);
+    color: #e2e8f0;
+    font-family: var(--font-sans);
+    min-height: 100vh;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4, .font-heading {
+    font-family: var(--font-heading);
+    letter-spacing: -0.02em;
+  }
+
+  code, pre, .font-mono {
+    font-family: var(--font-mono);
+    font-feature-settings: "tnum" 1, "zero" 1;
+  }
+
+  #root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  /* Custom Cross-browser Cyber Scrollbar */
+  ::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #080B14;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #1e293b;
+    border-radius: 9999px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #638BFF;
+  }
+}
+
+/* Micro glow utilities */
+.glow-blue {
+  box-shadow: 0 0 25px -4px rgba(99, 139, 255, 0.28);
+}
+.glow-purple {
+  box-shadow: 0 0 25px -4px rgba(147, 107, 255, 0.28);
+}
+.glow-green {
+  box-shadow: 0 0 25px -4px rgba(67, 214, 160, 0.28);
+}
+.glow-amber {
+  box-shadow: 0 0 25px -4px rgba(245, 185, 66, 0.28);
+}
+.glow-danger {
+  box-shadow: 0 0 25px -4px rgba(240, 100, 117, 0.28);
+}
+
+/* Cyber ambient backdrop grid */
+.cyber-grid {
+  background-color: #080B14;
+  background-image: 
+    radial-gradient(ellipse at 50% 0%, rgba(99, 139, 255, 0.09) 0%, transparent 65%),
+    radial-gradient(ellipse at 85% 85%, rgba(147, 107, 255, 0.06) 0%, transparent 55%),
+    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
+}
+
+/* Glassmorphism card surfaces */
+.glass-panel {
+  background: rgba(17, 24, 39, 0.82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-card {
+  background: rgba(17, 24, 39, 0.75);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-card:hover {
+  border-color: rgba(99, 139, 255, 0.4);
+}
+
+/* Shimmer animation for progress and highlights */
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+.animate-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+.animate-shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+  transform: translateX(-100%);
+  animation: shimmer 2.5s infinite;
+}
+
+/* Pulse glow for status indicators */
+@keyframes radar-pulse {
+  0% { transform: scale(0.95); opacity: 0.8; }
+  50% { transform: scale(1.15); opacity: 0.3; }
+  100% { transform: scale(0.95); opacity: 0.8; }
+}
+
+.radar-pulse {
+  animation: radar-pulse 2s infinite ease-in-out;
+}
+
+/* Forced Colors Mode for high contrast accessibility */
+@media (forced-colors: active) {
+  .glass-card, .glass-panel, button, input {
+    border: 1px solid CanvasText !important;
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

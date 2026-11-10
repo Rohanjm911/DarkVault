@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: darkvault-backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - PROJECT_NAME=DarkVault
+      - DATABASE_URL=sqlite:///./darkvault.db
+      - HIBP_API_URL=https://api.pwnedpasswords.com/range
+    volumes:
+      - darkvault_data:/app/data
+    networks:
+      - darkvault-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: darkvault-frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "5173:80"
+    depends_on:
+      - backend
+    networks:
+      - darkvault-network
+
+volumes:
+  darkvault_data:
+    driver: local
+
+networks:
+  darkvault-network:
+    driver: bridge
+
