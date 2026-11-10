@@ -13,6 +13,8 @@ import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/Card'
 import { Badge } from '../components/ui/Badge';
 import { Button } from '../components/ui/Button';
 import { PageHeader } from '../components/ui/PageHeader';
+import { Alert } from '../components/ui/Alert';
+import { Tooltip } from '../components/ui/Tooltip';
 import { Input } from '../components/ui/Input';
 import { Progress } from '../components/ui/Progress';
 import { PasswordAnalysis } from '../lib/types';
@@ -97,18 +99,21 @@ export const AnalyzerPage: React.FC<AnalyzerPageProps> = ({
         }
       />
       {/* Air-Gapped Header Notice */}
-      <div className="flex items-center justify-between p-3.5 rounded-xl bg-[#111827]/80 border border-white/[0.08] text-xs font-mono text-slate-300">
-        <div className="flex items-center gap-2.5">
-          <Zap className="w-4 h-4 text-[#638BFF] shrink-0" />
+      <Alert
+        variant="info"
+        title="Air-Gapped Client Analysis Active"
+        icon={<Zap className="w-4 h-4 text-[#638BFF]" />}
+      >
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
           <span>
-            <strong>AIR-GAPPED ANALYSIS ACTIVE:</strong> Entropy calculations, character pool evaluation, and dictionary heuristics run 100% in client-side memory.
+            Shannon entropy, character pool evaluation, and dictionary heuristics run 100% in volatile client-side memory. Zero bytes transmitted over network.
+          </span>
+          <span className="text-[#43D6A0] text-[11px] font-mono font-semibold flex items-center gap-1.5 shrink-0">
+            <span className="w-2 h-2 rounded-full bg-[#43D6A0] animate-pulse" />
+            Web Crypto Sandbox
           </span>
         </div>
-        <div className="hidden sm:flex items-center gap-2 text-[#43D6A0]">
-          <span className="w-2 h-2 rounded-full bg-[#43D6A0] animate-pulse" />
-          <span>Web Crypto Sandbox</span>
-        </div>
-      </div>
+      </Alert>
 
       {/* Main Password Input Card */}
       <Card variant="glass" glow="blue">
@@ -202,7 +207,9 @@ export const AnalyzerPage: React.FC<AnalyzerPageProps> = ({
         <Card variant="glass" glow="purple">
           <CardContent className="p-5">
             <div className="flex items-center justify-between text-xs font-mono text-slate-400">
-              <span>SHANNON ENTROPY</span>
+              <Tooltip content="H = L * log2(N) minus dictionary, repeat & keyboard pattern deductions">
+                <span className="cursor-help underline decoration-dotted decoration-slate-600">SHANNON ENTROPY</span>
+              </Tooltip>
               <Badge variant="purple" size="sm">
                 Log2 Scale
               </Badge>
@@ -227,7 +234,9 @@ export const AnalyzerPage: React.FC<AnalyzerPageProps> = ({
         <Card variant="glass" glow="green">
           <CardContent className="p-5">
             <div className="flex items-center justify-between text-xs font-mono text-slate-400">
-              <span>CHARACTER POOL</span>
+              <Tooltip content="Total unique character set size used in candidate keyspace calculation">
+                <span className="cursor-help underline decoration-dotted decoration-slate-600">CHARACTER POOL</span>
+              </Tooltip>
               <Badge variant="green" size="sm">
                 R = {analysis.poolSize} Glyphs
               </Badge>

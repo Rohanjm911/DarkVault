@@ -12,6 +12,8 @@ import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/Card'
 import { Badge } from '../components/ui/Badge';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
+import { Alert } from '../components/ui/Alert';
+import { Tooltip } from '../components/ui/Tooltip';
 import { PageHeader } from '../components/ui/PageHeader';
 import { BreachResult } from '../lib/types';
 import { calculateSha1 } from '../lib/crypto/sha1';
@@ -62,20 +64,20 @@ export const BreachCheckerPage: React.FC<BreachCheckerPageProps> = ({
         badgeVariant="purple"
       />
       {/* Educational Header Banner */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 p-4 rounded-xl bg-[#111827]/80 border border-white/[0.08] text-xs font-mono text-slate-300">
-        <div>
-          <div className="flex items-center gap-2 mb-1 text-[#638BFF] font-semibold">
-            <Database className="w-4 h-4" />
-            <span>ZERO-KNOWLEDGE K-ANONYMITY BREACH INTELLIGENCE</span>
-          </div>
-          <p className="text-slate-400 font-sans leading-relaxed">
+      <Alert
+        variant="purple"
+        title="Zero-Knowledge K-Anonymity Breach Intelligence"
+        icon={<Database className="w-4 h-4 text-[#936BFF]" />}
+      >
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <span>
             DarkVault queries the Have I Been Pwned repository (&gt;1 billion compromised credentials) without EVER exposing your plaintext password or full hash across the network.
-          </p>
+          </span>
+          <Badge variant={useBackendProxy ? 'blue' : 'neutral'} size="sm" className="shrink-0">
+            {useBackendProxy ? 'Proxy Routing' : 'Direct API'}
+          </Badge>
         </div>
-        <Badge variant={useBackendProxy ? 'blue' : 'neutral'} size="sm" className="shrink-0">
-          {useBackendProxy ? 'Proxy Routing' : 'Direct API'}
-        </Badge>
-      </div>
+      </Alert>
 
       {/* Input Card */}
       <Card variant="glass" glow="blue">
@@ -143,13 +145,17 @@ export const BreachCheckerPage: React.FC<BreachCheckerPageProps> = ({
                 <span className="text-[#43D6A0] font-semibold">Calculated locally in volatile memory</span>
               </div>
               <div className="flex flex-wrap items-center gap-1 font-mono text-xs break-all">
-                <span className="px-2 py-0.5 rounded bg-[#638BFF]/20 text-[#638BFF] border border-[#638BFF]/40 font-bold" title="First 5 characters sent to server">
-                  {sha1Preview.prefix}
-                </span>
+                <Tooltip content="First 5 characters (prefix) sent to HIBP k-anonymity API">
+                  <span className="px-2 py-0.5 rounded bg-[#638BFF]/20 text-[#638BFF] border border-[#638BFF]/40 font-bold cursor-help">
+                    {sha1Preview.prefix}
+                  </span>
+                </Tooltip>
                 <span className="text-slate-500 px-1">|</span>
-                <span className="text-slate-400" title="Remaining 35 characters matched strictly inside your browser">
-                  {sha1Preview.suffix}
-                </span>
+                <Tooltip content="Remaining 35 characters (suffix) evaluated strictly in local browser memory">
+                  <span className="text-slate-400 cursor-help underline decoration-dotted decoration-slate-600">
+                    {sha1Preview.suffix}
+                  </span>
+                </Tooltip>
               </div>
               <div className="mt-2 text-[10px] text-slate-500 flex flex-col sm:flex-row sm:items-center justify-between gap-1 font-mono">
                 <span>

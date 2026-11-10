@@ -11,6 +11,7 @@ import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/Card'
 import { Badge } from '../components/ui/Badge';
 import { Button } from '../components/ui/Button';
 import { PageHeader } from '../components/ui/PageHeader';
+import { Alert } from '../components/ui/Alert';
 import { GeneratorConfig, PasswordAnalysis } from '../lib/types';
 import { generatePassword, generateBulkPasswords } from '../lib/crypto/generator';
 import { analyzePassword } from '../lib/crypto/entropy';
@@ -110,14 +111,15 @@ export const GeneratorPage: React.FC<GeneratorPageProps> = ({ onSendToAnalyzer }
         }
       />
       {/* Educational Banner */}
-      <div className="flex items-center justify-between p-3.5 rounded-xl bg-[#111827]/80 border border-white/[0.08] text-xs font-mono text-slate-300">
-        <div className="flex items-center gap-2">
-          <Zap className="w-4 h-4 text-[#43D6A0] shrink-0" />
-          <span>
-            <strong>CRYPTOGRAPHICALLY SECURE PSEUDO-RANDOM NUMBER GENERATOR (CSPRNG):</strong> Powered by the Web Crypto API (<code className="text-[#638BFF]">crypto.getRandomValues</code>) with modulo rejection sampling to eliminate statistical bias.
-          </span>
-        </div>
-      </div>
+      <Alert
+        variant="success"
+        title="Cryptographically Secure Pseudo-Random Number Generator (CSPRNG)"
+        icon={<Zap className="w-4 h-4 text-[#43D6A0]" />}
+      >
+        <span>
+          Entropy powered directly by the Web Crypto API (<code className="text-[#638BFF]">crypto.getRandomValues</code>) with modulo rejection sampling to eliminate statistical bias.
+        </span>
+      </Alert>
 
       {/* Main Generator Display Card */}
       <Card variant="glass" glow="green">

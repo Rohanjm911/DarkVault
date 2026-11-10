@@ -7,6 +7,7 @@ import {
 import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { PageHeader } from '../components/ui/PageHeader';
+import { Alert } from '../components/ui/Alert';
 import { AppSettings } from '../lib/types';
 import { useToast } from '../components/ui/ToastContext';
 
@@ -70,15 +71,15 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({
         }
       />
       {/* Educational Banner */}
-      <div className="p-4 rounded-xl bg-[#111827]/80 border border-white/[0.08] text-xs font-mono text-slate-300">
-        <div className="flex items-center gap-2 mb-1 text-[#638BFF] font-semibold">
-          <SettingsIcon className="w-4 h-4" />
-          <span>PRIVACY PREFERENCES &amp; CRYPTOGRAPHIC CONTROLS</span>
-        </div>
-        <p className="text-slate-400 font-sans leading-relaxed">
-          Configure local runtime behavior, API proxy preferences, and zero-knowledge data retention policies.
-        </p>
-      </div>
+      <Alert
+        variant="purple"
+        title="Privacy Preferences & Cryptographic Controls"
+        icon={<SettingsIcon className="w-4 h-4 text-[#936BFF]" />}
+      >
+        <span>
+          Configure local client runtime behavior, HIBP proxy routing preferences, and zero-knowledge data retention policies.
+        </span>
+      </Alert>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Privacy & Data Retention */}

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useId } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from './Card';
@@ -20,6 +20,8 @@ export const Modal: React.FC<ModalProps> = ({
   children,
   maxWidth = 'md',
 }) => {
+  const titleId = useId();
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -44,7 +46,12 @@ export const Modal: React.FC<ModalProps> = ({
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby={titleId}
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 overscroll-contain"
+        >
           {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -65,18 +72,20 @@ export const Modal: React.FC<ModalProps> = ({
           >
             <Card variant="glass" glow="blue" className="border-slate-700/80 shadow-2xl overflow-hidden">
               <CardHeader className="flex flex-row items-center justify-between">
-                <CardTitle className="text-sm text-slate-100 font-heading">
+                <CardTitle id={titleId} className="text-sm text-slate-100 font-heading flex items-center gap-2">
                   {icon}
                   {title}
                 </CardTitle>
                 <button
+                  type="button"
                   onClick={onClose}
+                  aria-label="Close modal dialog"
                   className="p-1 text-slate-400 hover:text-slate-100 hover:bg-slate-800/60 rounded-lg transition-colors cursor-pointer"
                 >
                   <X className="w-4 h-4" />
                 </button>
               </CardHeader>
-              <CardContent className="max-h-[80vh] overflow-y-auto">
+              <CardContent className="max-h-[80vh] overflow-y-auto overscroll-contain">
                 {children}
               </CardContent>
             </Card>

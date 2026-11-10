@@ -8,7 +8,6 @@ import {
   ArrowUpRight,
   TrendingUp,
   AlertTriangle,
-  Info,
   CheckCircle2,
 } from 'lucide-react';
 import {
@@ -20,11 +19,13 @@ import {
   Tooltip,
   Cell,
 } from 'recharts';
-import { motion } from 'framer-motion';
 import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/Card';
 import { Badge } from '../components/ui/Badge';
 import { Button } from '../components/ui/Button';
 import { PageHeader } from '../components/ui/PageHeader';
+import { Alert } from '../components/ui/Alert';
+import { EmptyState } from '../components/ui/EmptyState';
+import { AnimatedCounter } from '../components/ui/AnimatedCounter';
 import { RadialScoreGauge } from '../components/ui/RadialScoreGauge';
 import { DashboardMetrics } from '../lib/types';
 import { TabId } from '../components/layout/Sidebar';
@@ -65,30 +66,30 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
       />
       {/* Demo vs Real Data Banner */}
       {metrics.isDemoData && (
-        <motion.div
-          initial={{ opacity: 0, y: -8 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-3.5 rounded-xl bg-[#F5B942]/10 border border-[#F5B942]/30 text-[#F5B942] text-xs font-mono shadow-[0_0_15px_rgba(245,185,66,0.12)]"
+        <Alert
+          variant="warning"
+          title="Demonstration Telemetry Active"
+          onDismiss={onToggleDemoData}
         >
-          <div className="flex items-center gap-2.5">
-            <Info className="w-4 h-4 text-[#F5B942] shrink-0" />
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <span>
-              <strong>DEMONSTRATION TELEMETRY ACTIVE:</strong> Showing simulated enterprise credential metrics. Run scans in the Analyzer or Generator to populate your own live telemetry.
+              Showing simulated enterprise credential metrics. Run scans in the Analyzer or Generator to populate your own live telemetry.
             </span>
+            <button
+              type="button"
+              onClick={onToggleDemoData}
+              className="text-[#F5B942] underline hover:text-amber-200 cursor-pointer font-bold shrink-0 transition-colors"
+            >
+              Switch to Live Telemetry
+            </button>
           </div>
-          <button
-            onClick={onToggleDemoData}
-            className="text-[#F5B942] underline hover:text-amber-200 cursor-pointer font-bold shrink-0 transition-colors"
-          >
-            Switch to Live Telemetry
-          </button>
-        </motion.div>
+        </Alert>
       )}
 
       {/* Top Row: Radial Gauge Overview + 3 Stat Metric Cards */}
       <div className="grid grid-cols-1 md:grid-cols-12 gap-5 items-stretch">
         {/* Radial Score Gauge Card */}
-        <Card variant="glass" glow="blue" className="md:col-span-5 flex flex-col justify-between">
+        <Card variant="glass" glow="blue" hoverEffect className="md:col-span-5 flex flex-col justify-between">
           <CardHeader className="flex flex-row items-center justify-between">
             <div>
               <CardTitle>Security Posture Index</CardTitle>
@@ -122,7 +123,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
         {/* 3 Metric Summary Cards */}
         <div className="md:col-span-7 grid grid-cols-1 sm:grid-cols-3 gap-4">
           {/* Total Analyses */}
-          <Card variant="glass" glow="purple" className="flex flex-col justify-between">
+          <Card variant="glass" glow="purple" hoverEffect className="flex flex-col justify-between">
             <CardContent className="p-5">
               <div className="flex items-center justify-between">
                 <span className="text-[10px] font-mono font-semibold text-slate-400 tracking-wider">TOTAL AUDITS</span>
@@ -132,7 +133,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
               </div>
               <div className="mt-3">
                 <span className="text-3xl font-extrabold font-heading text-white tracking-tight">
-                  {metrics.totalAnalyses.toLocaleString()}
+                  <AnimatedCounter value={metrics.totalAnalyses} />
                 </span>
               </div>
               <div className="mt-2 flex items-center gap-1 text-[11px] text-[#43D6A0] font-mono">
@@ -146,7 +147,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
           </Card>
 
           {/* Strong / Hardened */}
-          <Card variant="glass" glow="green" className="flex flex-col justify-between">
+          <Card variant="glass" glow="green" hoverEffect className="flex flex-col justify-between">
             <CardContent className="p-5">
               <div className="flex items-center justify-between">
                 <span className="text-[10px] font-mono font-semibold text-slate-400 tracking-wider">STRONG PASSWORDS</span>
@@ -156,7 +157,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
               </div>
               <div className="mt-3">
                 <span className="text-3xl font-extrabold font-heading text-[#43D6A0] tracking-tight">
-                  {metrics.strongPasswords.toLocaleString()}
+                  <AnimatedCounter value={metrics.strongPasswords} />
                 </span>
               </div>
               <div className="mt-2 text-[11px] text-slate-400 font-mono">
@@ -171,7 +172,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
           </Card>
 
           {/* Known Breaches */}
-          <Card variant="glass" glow="danger" className="flex flex-col justify-between">
+          <Card variant="glass" glow="danger" hoverEffect className="flex flex-col justify-between">
             <CardContent className="p-5">
               <div className="flex items-center justify-between">
                 <span className="text-[10px] font-mono font-semibold text-slate-400 tracking-wider">BREACH HITS</span>
@@ -181,7 +182,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
               </div>
               <div className="mt-3">
                 <span className="text-3xl font-extrabold font-heading text-[#F06475] tracking-tight">
-                  {metrics.breachesDetected.toLocaleString()}
+                  <AnimatedCounter value={metrics.breachesDetected} />
                 </span>
               </div>
               <div className="mt-2 text-[11px] text-[#F06475] font-mono font-semibold">
@@ -367,28 +368,37 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
             </p>
           </CardHeader>
           <CardContent className="space-y-3.5">
-            {metrics.activityTimeline.map((item) => (
-              <div key={item.id} className="flex items-start gap-3 text-xs font-mono">
-                <div
-                  className={`w-2 h-2 rounded-full mt-1.5 shrink-0 ${
-                    item.risk === 'CRITICAL'
-                      ? 'bg-[#F06475] shadow-[0_0_8px_rgba(240,100,117,0.7)]'
-                      : item.risk === 'SECURE'
-                      ? 'bg-[#43D6A0] shadow-[0_0_8px_rgba(67,214,160,0.7)]'
-                      : item.risk === 'HIGH'
-                      ? 'bg-[#F5B942] shadow-[0_0_8px_rgba(245,185,66,0.7)]'
-                      : 'bg-[#638BFF]'
-                  }`}
-                />
-                <div className="flex-1">
-                  <div className="flex items-center justify-between">
-                    <span className="font-semibold text-slate-200">{item.action}</span>
-                    <span className="text-[10px] text-slate-500">{item.timestamp}</span>
+            {metrics.activityTimeline.length === 0 ? (
+              <EmptyState
+                title="No Session Activity Yet"
+                description="Run analysis, check breach status, or generate a secret to begin recording volatile session operations."
+                actionText="Analyze Credential"
+                onAction={() => onNavigate('analyzer')}
+              />
+            ) : (
+              metrics.activityTimeline.map((item) => (
+                <div key={item.id} className="flex items-start gap-3 text-xs font-mono">
+                  <div
+                    className={`w-2 h-2 rounded-full mt-1.5 shrink-0 ${
+                      item.risk === 'CRITICAL'
+                        ? 'bg-[#F06475] shadow-[0_0_8px_rgba(240,100,117,0.7)]'
+                        : item.risk === 'SECURE'
+                        ? 'bg-[#43D6A0] shadow-[0_0_8px_rgba(67,214,160,0.7)]'
+                        : item.risk === 'HIGH'
+                        ? 'bg-[#F5B942] shadow-[0_0_8px_rgba(245,185,66,0.7)]'
+                        : 'bg-[#638BFF]'
+                    }`}
+                  />
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between">
+                      <span className="font-semibold text-slate-200">{item.action}</span>
+                      <span className="text-[10px] text-slate-500">{item.timestamp}</span>
+                    </div>
+                    <p className="text-slate-400 text-[11px] mt-0.5 font-sans leading-relaxed">{item.details}</p>
                   </div>
-                  <p className="text-slate-400 text-[11px] mt-0.5 font-sans leading-relaxed">{item.details}</p>
                 </div>
-              </div>
-            ))}
+              ))
+            )}
           </CardContent>
         </Card>
 
@@ -401,42 +411,49 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
             </p>
           </CardHeader>
           <CardContent className="space-y-3">
-            {metrics.recentAlerts.map((alert) => (
-              <div
-                key={alert.id}
-                className="flex items-start gap-3 p-3 rounded-lg bg-[#0D1320] border border-white/[0.06]"
-              >
-                <AlertTriangle
-                  className={`w-4 h-4 shrink-0 mt-0.5 ${
-                    alert.severity === 'CRITICAL'
-                      ? 'text-[#F06475]'
-                      : alert.severity === 'HIGH'
-                      ? 'text-[#F5B942]'
-                      : 'text-[#638BFF]'
-                  }`}
-                />
-                <div className="flex-1">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-semibold text-slate-200 font-mono">{alert.title}</span>
-                    <Badge
-                      variant={
-                        alert.severity === 'CRITICAL'
-                          ? 'red'
-                          : alert.severity === 'HIGH'
-                          ? 'amber'
-                          : 'blue'
-                      }
-                      size="sm"
-                    >
-                      {alert.severity}
-                    </Badge>
+            {metrics.recentAlerts.length === 0 ? (
+              <EmptyState
+                title="All Clear — Zero Active Threat Alerts"
+                description="No critical exposure or weak credential hashes have been identified in the current telemetry batch."
+              />
+            ) : (
+              metrics.recentAlerts.map((alert) => (
+                <div
+                  key={alert.id}
+                  className="flex items-start gap-3 p-3 rounded-lg bg-[#0D1320] border border-white/[0.06]"
+                >
+                  <AlertTriangle
+                    className={`w-4 h-4 shrink-0 mt-0.5 ${
+                      alert.severity === 'CRITICAL'
+                        ? 'text-[#F06475]'
+                        : alert.severity === 'HIGH'
+                        ? 'text-[#F5B942]'
+                        : 'text-[#638BFF]'
+                    }`}
+                  />
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-semibold text-slate-200 font-mono">{alert.title}</span>
+                      <Badge
+                        variant={
+                          alert.severity === 'CRITICAL'
+                            ? 'red'
+                            : alert.severity === 'HIGH'
+                            ? 'amber'
+                            : 'blue'
+                        }
+                        size="sm"
+                      >
+                        {alert.severity}
+                      </Badge>
+                    </div>
+                    <p className="text-[11px] text-slate-400 mt-1 font-sans leading-relaxed">
+                      {alert.description}
+                    </p>
                   </div>
-                  <p className="text-[11px] text-slate-400 mt-1 font-sans leading-relaxed">
-                    {alert.description}
-                  </p>
                 </div>
-              </div>
-            ))}
+              ))
+            )}
           </CardContent>
         </Card>
       </div>

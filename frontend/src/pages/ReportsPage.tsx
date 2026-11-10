@@ -8,6 +8,7 @@ import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/Card'
 import { Badge } from '../components/ui/Badge';
 import { Button } from '../components/ui/Button';
 import { PageHeader } from '../components/ui/PageHeader';
+import { Alert } from '../components/ui/Alert';
 import { PasswordAnalysis } from '../lib/types';
 import { generateSecurityReportPdf } from '../lib/pdf/pdfGenerator';
 import { useToast } from '../components/ui/ToastContext';
@@ -70,15 +71,15 @@ export const ReportsPage: React.FC<ReportsPageProps> = ({
         badgeVariant="blue"
       />
       {/* Educational Banner */}
-      <div className="p-4 rounded-xl bg-[#111827]/80 border border-white/[0.08] text-xs font-mono text-slate-300">
-        <div className="flex items-center gap-2 mb-1 text-[#638BFF] font-semibold">
-          <FileText className="w-4 h-4" />
-          <span>CONFIDENTIAL CRYPTOGRAPHIC AUDIT REPORT ENGINE</span>
-        </div>
-        <p className="text-slate-400 font-sans leading-relaxed">
-          Generates executive-ready PDF documentation suitable for cybersecurity internships, compliance reviews, and enterprise security evaluations. Plaintext passwords and sensitive hashes are strictly omitted.
-        </p>
-      </div>
+      <Alert
+        variant="info"
+        title="Confidential Cryptographic Audit Report Engine"
+        icon={<FileText className="w-4 h-4 text-[#638BFF]" />}
+      >
+        <span>
+          Generates executive-ready PDF documentation suitable for cybersecurity audits, compliance reviews, and enterprise security evaluations. Plaintext passwords and sensitive hashes are strictly omitted.
+        </span>
+      </Alert>
 
       {/* Report Configuration & Export Controls */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

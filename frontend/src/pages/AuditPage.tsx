@@ -11,6 +11,8 @@ import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/Card'
 import { Badge } from '../components/ui/Badge';
 import { Button } from '../components/ui/Button';
 import { PageHeader } from '../components/ui/PageHeader';
+import { Alert } from '../components/ui/Alert';
+import { EmptyState } from '../components/ui/EmptyState';
 import { Input } from '../components/ui/Input';
 import { analyzePassword } from '../lib/crypto/entropy';
 import { PasswordAnalysis } from '../lib/types';
@@ -141,15 +143,15 @@ export const AuditPage: React.FC = () => {
         }
       />
       {/* Integrity & Accuracy Notice */}
-      <div className="p-4 rounded-xl bg-[#111827]/80 border border-white/[0.08] text-xs font-mono text-slate-300">
-        <div className="flex items-center gap-2 mb-1 text-[#936BFF] font-semibold">
-          <FileCheck2 className="w-4 h-4" />
-          <span>VERIFIED AUDIT PROTOCOL (NIST SP 800-63B GUIDELINES)</span>
-        </div>
-        <p className="text-slate-400 font-sans leading-relaxed">
+      <Alert
+        variant="purple"
+        title="Verified Audit Protocol (NIST SP 800-63B Guidelines)"
+        icon={<FileCheck2 className="w-4 h-4 text-[#936BFF]" />}
+      >
+        <span>
           DarkVault audits only the exact credentials tested in volatile memory. We never claim to inspect accounts or passwords outside your verified input.
-        </p>
-      </div>
+        </span>
+      </Alert>
 
       {/* Aggregate Audit Scorecards */}
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
@@ -255,9 +257,10 @@ export const AuditPage: React.FC = () => {
         </CardHeader>
         <CardContent>
           {items.length === 0 ? (
-            <div className="p-8 text-center text-slate-500 font-mono text-xs">
-              No audit records currently active in session memory. Add a credential above to begin.
-            </div>
+            <EmptyState
+              title="No Credential Audits Recorded"
+              description="Add credentials above to evaluate password uniqueness, Shannon entropy, and NIST SP 800-63B standards across your fleet."
+            />
           ) : (
             <div className="space-y-3">
               {items.map((item) => (
