@@ -22,6 +22,46 @@
 
 ---
 
+## 📸 Application Interface & Visual Showcase
+
+### 1. Security Telemetry Command Center
+*Live cryptographic score orb, symmetric metric deck, password strength distribution, and volatile activity timeline.*
+<p align="center">
+  <img src="docs/screenshots/01-dashboard.png" alt="DarkVault Command Dashboard" width="100%" />
+</p>
+
+### 2. Deep-Dive Password Analyzer
+*Real-time Shannon entropy meter, character diversity pool, pattern heuristic deductions, and multi-tier crack times.*
+<p align="center">
+  <img src="docs/screenshots/02-password-analyzer.png" alt="Password Analyzer" width="100%" />
+</p>
+
+### 3. K-Anonymity Breach Range Checker
+*Mathematical k-anonymity SHA-1 prefix lookup against 1B+ breach corpus with local client-side suffix matching.*
+<p align="center">
+  <img src="docs/screenshots/03-breach-checker.png" alt="Breach Checker" width="100%" />
+</p>
+
+### 4. Cryptographic Key & Secret Generator
+*CSPRNG random secrets, Diceware memorable passphrases, and batch credential generation.*
+<p align="center">
+  <img src="docs/screenshots/04-key-generator.png" alt="Key Generator" width="100%" />
+</p>
+
+### 5. NIST SP 800-63B Fleet Security Audit
+*Multi-credential batch auditing against US Federal Digital Identity Guidelines with risk triage.*
+<p align="center">
+  <img src="docs/screenshots/05-security-audit.png" alt="Security Audit" width="100%" />
+</p>
+
+### 6. Executive Cryptographic Report Compiler
+*Dual-engine print-ready PDF reports with parameter customization and compliance roadmaps.*
+<p align="center">
+  <img src="docs/screenshots/06-executive-reports.png" alt="Executive Reports" width="100%" />
+</p>
+
+---
+
 ## 🚀 Application Modules
 
 | Module | Description | Implementation Details |
